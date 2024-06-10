@@ -7,11 +7,8 @@ import org.springframework.beans.BeanUtils;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 首页推荐
- */
 @Data
-public class PostVO implements Serializable {
+public class PostHotVO implements Serializable {
 
     /**
      * id
@@ -39,9 +36,9 @@ public class PostVO implements Serializable {
     private Integer comments;
 
     /**
-     * 帖子发布时间
+     * 帖子浏览量
      */
-    private Date post_time;
+    private Double pv;
 
     /**
      * 对象转包装类
@@ -49,12 +46,12 @@ public class PostVO implements Serializable {
      * @param post
      * @return
      */
-    public static PostVO objToVo(Post post) {
+    public static PostHotVO objToVo(Post post) {
         if (post == null) {
             return null;
         }
-        PostVO postVO = new PostVO();
-        BeanUtils.copyProperties(post, postVO);
-        return postVO;
+        PostHotVO postHotVO = new PostHotVO();
+        BeanUtils.copyProperties(post, postHotVO);
+        return postHotVO;
     }
 }

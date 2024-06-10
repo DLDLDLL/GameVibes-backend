@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.Post;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.gamevibe.model.vo.PostHotVO;
 import com.example.gamevibe.model.vo.PostVO;
 
 /**
@@ -14,4 +15,6 @@ import com.example.gamevibe.model.vo.PostVO;
 public interface PostService extends IService<Post> {
 
     Page<PostVO> getPostVOPage(PageRequest pageRequest);
+
+    Page<PostHotVO> getPostHotVOPage(PageRequest pageRequest);
 }
