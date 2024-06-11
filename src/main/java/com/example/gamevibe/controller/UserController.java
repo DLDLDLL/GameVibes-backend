@@ -33,6 +33,18 @@ public class UserController {
     }
 
     @GetMapping("/api/redirect-url")
+    public void getRedirectUrl(HttpServletResponse response) {
+        try {
+            String signinUrl = casdoorAuthService.getSigninUrl(redirectUrl);
+            response.sendRedirect(signinUrl);
+        } catch (CasdoorAuthException exception) {
+            logger.error("casdoor auth exception", exception);
+        } catch (IOException e) {
+            logger.error("io exception", e);
+        }
+    }
+
+/*    @GetMapping("/api/redirect-url")
     public BaseResponse getRedirectUrl() {
         try {
             String signinUrl = casdoorAuthService.getSigninUrl(redirectUrl);
@@ -41,20 +53,22 @@ public class UserController {
             logger.error("casdoor auth exception", exception);
             return ResultUtils.error(exception.getMessage());
         }
-    }
+    }*/
 
-//    @GetMapping("/api/signin")
-//    public BaseResponse signin(@RequestParam("code") String code, @RequestParam("state") String state, HttpServletResponse response) {
-//        try {
-//            String token = casdoorAuthService.getOAuthToken(code, state);
-//            Cookie cookie = new Cookie("token", token);
-//            response.addCookie(cookie);
-//            return ResultUtils.success(null);
-//        } catch (CasdoorAuthException exception) {
-//            logger.error("casdoor auth exception", exception);
-//            return ResultUtils.error(exception.getMessage());
-//        }
-//    }
+/*    @GetMapping("/api/signin")
+    public BaseResponse signin(@RequestParam("code") String code, @RequestParam("state") String state, HttpServletResponse response) {
+        try {
+            String token = casdoorAuthService.getOAuthToken(code, state);
+            Cookie cookie = new Cookie("token", token);
+            response.addCookie(cookie);
+
+            return ResultUtils.success(null);
+        } catch (CasdoorAuthException exception) {
+            logger.error("casdoor auth exception", exception);
+            return ResultUtils.error(exception.getMessage());
+        }
+    }*/
+
 
     @GetMapping("/api/signin")
     public void signin(@RequestParam("code") String code, @RequestParam("state") String state, HttpServletResponse response) throws IOException {
