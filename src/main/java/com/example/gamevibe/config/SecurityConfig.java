@@ -8,22 +8,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Collections;
 
 @EnableWebSecurity
 public class SecurityConfig {
-
 
     private final JwtTokenFilter jwtTokenFilter;
     private final String frontendUrl;
@@ -75,11 +70,8 @@ public class SecurityConfig {
         // set logout handler
         http.logout(logoutConfig ->
                 logoutConfig.logoutUrl("/api/logout")
-                        .addLogoutHandler(new LogoutHandler() {
-                            @Override
-                            public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+                        .addLogoutHandler((request, response, authentication) -> {
 
-                            }
                         })
         );
 
