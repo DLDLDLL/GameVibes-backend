@@ -6,16 +6,16 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * 帖子搜索分页查询请求 dto
+ * 帖子评论分页查询请求 dto
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class PostQueryRequest extends PageRequest implements Serializable {
+public class PostCommentQueryRequest extends PageRequest implements Serializable {
 
     /**
-     * 搜索词
+     * 帖子id
      */
-    private String searchText;
+    private long post_id;
 
     private static final long serialVersionUID = 1L;
 }

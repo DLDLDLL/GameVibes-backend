@@ -9,12 +9,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
- * 帖子表
- * @TableName post
+ * 官方资讯表
+ * @TableName news
  */
-@TableName(value ="post")
+@TableName(value ="news")
 @Data
-public class Post implements Serializable {
+public class News implements Serializable {
     /**
      * id
      */
@@ -42,37 +42,12 @@ public class Post implements Serializable {
     private String images;
 
     /**
-     * 帖子内容
+     * 资讯内容
      */
     private String content;
 
     /**
-     * 帖子发布地点
-     */
-    private String location;
-
-    /**
-     * 评论数量
-     */
-    private Integer comments;
-
-    /**
-     * 点赞数量
-     */
-    private Integer likes;
-
-    /**
-     * 收藏数量
-     */
-    private Integer favours;
-
-    /**
-     * 阅读量
-     */
-    private Long pv;
-
-    /**
-     * 帖子发布时间
+     * 资讯发布时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date post_time;

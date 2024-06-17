@@ -9,6 +9,10 @@
             <result property="user_id" column="user_id" jdbcType="BIGINT"/>
             <result property="post_id" column="post_id" jdbcType="BIGINT"/>
             <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="comments" column="comments" jdbcType="INTEGER"/>
+            <result property="likes" column="likes" jdbcType="INTEGER"/>
+            <result property="location" column="location" jdbcType="VARCHAR"/>
+            <result property="post_name" column="post_name" jdbcType="TIMESTAMP"/>
             <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
             <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="is_delete" column="is_delete" jdbcType="TINYINT"/>
@@ -16,7 +20,8 @@
 
     <sql id="Base_Column_List">
         id,user_id,post_id,
-        content,create_time,update_time,
-        is_delete
+        content,comments,likes,
+        location,post_name,create_time,
+        update_time,is_delete
     </sql>
 </mapper>
