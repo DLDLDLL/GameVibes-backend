@@ -17,6 +17,8 @@ public interface FocusUserService extends IService<FocusUser> {
 
     PageVO<List<FocusUserVO>, FocusUserVO> getFocusUserVOPage(PageRequest pageRequest);
 
+    PageVO<List<FocusUserVO>, FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String query_user_id);
+
     void focus(String focus_id);
 
     void unFocus(String focus_id);

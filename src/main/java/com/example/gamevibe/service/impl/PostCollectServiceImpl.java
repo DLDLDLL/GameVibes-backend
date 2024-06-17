@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.mapper.PostCollectMapper;
 import com.example.gamevibe.model.dto.PageRequest;
-import com.example.gamevibe.model.vo.PostCollectVO;
+import com.example.gamevibe.model.vo.MyPostCollectVO;
 import com.example.gamevibe.model.entity.PostCollect;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.PostCollectService;
@@ -27,14 +27,14 @@ public class PostCollectServiceImpl extends ServiceImpl<PostCollectMapper, PostC
     private PostCollectMapper postCollectMapper;
 
     @Override
-    public PageVO<List<PostCollectVO>, PostCollectVO> getCollectPostVOPage(PageRequest pageRequest) {
+    public PageVO<List<MyPostCollectVO>, MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         String user_id = BaseContext.getCurrentId();
 
-        Page<PostCollectVO> collectPostPage = postCollectMapper.getCollectPostVOPage(user_id, new Page<>(current, size));
+        Page<MyPostCollectVO> collectPostPage = postCollectMapper.getCollectPostVOPage(user_id, new Page<>(current, size));
 
-        return new PageVO<List<PostCollectVO>, PostCollectVO>().objToVO(collectPostPage);
+        return new PageVO<List<MyPostCollectVO>, MyPostCollectVO>().objToVO(collectPostPage);
     }
 
     @Override

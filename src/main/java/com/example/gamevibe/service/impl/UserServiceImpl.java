@@ -2,9 +2,12 @@ package com.example.gamevibe.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
+import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.mapper.UserMapper;
 import com.example.gamevibe.model.entity.User;
+import com.example.gamevibe.model.vo.UserVO;
 import com.example.gamevibe.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +18,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    @Autowired
+    private UserMapper userMapper;
 
+    @Override
+    public UserVO getUserInfo() {
+        String user_id = BaseContext.getCurrentId();
+        return userMapper.getUserInfo(user_id);
+    }
 
 
 }

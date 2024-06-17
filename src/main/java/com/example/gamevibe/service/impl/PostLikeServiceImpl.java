@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.mapper.PostLikeMapper;
 import com.example.gamevibe.model.dto.PageRequest;
-import com.example.gamevibe.model.vo.PostLikeVO;
+import com.example.gamevibe.model.vo.MyPostLikeVO;
 import com.example.gamevibe.model.entity.PostLike;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.PostLikeService;
@@ -27,14 +27,14 @@ public class PostLikeServiceImpl extends ServiceImpl<PostLikeMapper, PostLike> i
     private PostLikeMapper postLikeMapper;
 
     @Override
-    public PageVO<List<PostLikeVO>, PostLikeVO> getLikePostVOPage(PageRequest pageRequest) {
+    public PageVO<List<MyPostLikeVO>, MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         String user_id = BaseContext.getCurrentId();
 
-        Page<PostLikeVO> likePostPage = postLikeMapper.getLikePostVOPage(user_id, new Page<>(current, size));
+        Page<MyPostLikeVO> likePostPage = postLikeMapper.getLikePostVOPage(user_id, new Page<>(current, size));
 
-        return new PageVO<List<PostLikeVO>, PostLikeVO>().objToVO(likePostPage);
+        return new PageVO<List<MyPostLikeVO>, MyPostLikeVO>().objToVO(likePostPage);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.example.gamevibe.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.dto.PageRequest;
-import com.example.gamevibe.model.vo.PostCollectVO;
+import com.example.gamevibe.model.vo.MyPostCollectVO;
 import com.example.gamevibe.model.entity.PostCollect;
 import com.example.gamevibe.model.vo.PageVO;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 */
 public interface PostCollectService extends IService<PostCollect> {
 
-    PageVO<List<PostCollectVO>, PostCollectVO> getCollectPostVOPage(PageRequest pageRequest);
+    PageVO<List<MyPostCollectVO>, MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest);
 
     void collect(String post_id);
 

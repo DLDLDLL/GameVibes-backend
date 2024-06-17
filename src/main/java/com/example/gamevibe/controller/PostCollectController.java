@@ -16,7 +16,7 @@ public class PostCollectController {
     private PostCollectService postCollectService;
 
     @GetMapping("/list/page/vo")
-    public BaseResponse<?> listPostCollectVOByPage(PageRequest pageRequest) {
+    public BaseResponse<?> listPostCollectVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
         return ResultUtils.success(postCollectService.getCollectPostVOPage(pageRequest));
     }
 

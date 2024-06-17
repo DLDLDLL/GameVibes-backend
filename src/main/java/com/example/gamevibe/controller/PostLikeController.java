@@ -16,7 +16,7 @@ public class PostLikeController {
     private PostLikeService postLikeService;
 
     @GetMapping("/list/page/vo")
-    public BaseResponse<?> listPostLikeVOByPage(PageRequest pageRequest) {
+    public BaseResponse<?> listPostLikeVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
         return ResultUtils.success(postLikeService.getLikePostVOPage(pageRequest));
     }
 

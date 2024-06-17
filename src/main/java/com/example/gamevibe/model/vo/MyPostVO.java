@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class PostLikeVO implements Serializable {
+public class MyPostVO implements Serializable {
 
     /**
      * 帖子id
@@ -58,4 +58,18 @@ public class PostLikeVO implements Serializable {
      */
     protected int like_count;
 
+    /**
+     * 是否点赞
+     */
+    protected int is_like;
+
+    /**
+     * 帖子收藏数
+     */
+    protected int collect_count;
+
+    /**
+     * 是否收藏
+     */
+    protected int is_collect;
 }

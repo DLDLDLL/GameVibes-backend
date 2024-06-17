@@ -99,8 +99,8 @@ CREATE TABLE user
     user_id     varchar(255)                               NOT NULL COMMENT '用户id',
     nick_name   varchar(16)      DEFAULT '手机用户'         NOT NULL COMMENT '用户昵称',
     avatar      varchar(255)                               NOT NULL COMMENT '用户头像',
-    intro       varchar(32)      DEFAULT ''                NOT NULL COMMENT '用户简介',
-    ip_addr     varchar(128)       DEFAULT '未知'           NOT NULL COMMENT 'ip地址',
+    intro       varchar(32)      DEFAULT '专属于你的gamevibe!' NOT NULL COMMENT '用户简介',
+    ip_addr     varchar(128)     DEFAULT '未知'             NOT NULL COMMENT 'ip地址',
     create_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
     update_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间' ON UPDATE CURRENT_TIMESTAMP,
     is_delete   tinyint          DEFAULT 0                 NOT NULL COMMENT '是否删除'
@@ -144,6 +144,7 @@ CREATE TABLE focus_user
 ) comment '关注用户表' collate = utf8mb4_unicode_ci;
 
 ALTER TABLE focus_user ADD UNIQUE INDEX index_uid_fid(user_id, focused_id);
+ALTER TABLE focus_user ADD INDEX index_fid(focused_id);
 
 INSERT INTO post_like (user_id, post_id) VALUES
 ('43ef5ba2-5b0a-43bc-a83e-fe3b3340c4ac', 1),

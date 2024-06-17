@@ -2,7 +2,7 @@ package com.example.gamevibe.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.dto.PageRequest;
-import com.example.gamevibe.model.vo.PostLikeVO;
+import com.example.gamevibe.model.vo.MyPostLikeVO;
 import com.example.gamevibe.model.entity.PostLike;
 import com.example.gamevibe.model.vo.PageVO;
 
@@ -15,7 +15,7 @@ import java.util.List;
 */
 public interface PostLikeService extends IService<PostLike> {
 
-    PageVO<List<PostLikeVO>, PostLikeVO> getLikePostVOPage(PageRequest pageRequest);
+    PageVO<List<MyPostLikeVO>, MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest);
 
     void like(String post_id);
 

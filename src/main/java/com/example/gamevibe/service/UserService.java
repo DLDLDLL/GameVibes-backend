@@ -2,6 +2,7 @@ package com.example.gamevibe.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.entity.User;
+import com.example.gamevibe.model.vo.UserVO;
 
 /**
 * @author ZML
@@ -10,4 +11,5 @@ import com.example.gamevibe.model.entity.User;
 */
 public interface UserService extends IService<User> {
 
+    UserVO getUserInfo();
 }

@@ -27,4 +27,9 @@ public class FocusUserVO implements Serializable {
      */
     private String intro;
 
+    /**
+     * 是否关注
+     */
+    private int is_focus;
+
 }
