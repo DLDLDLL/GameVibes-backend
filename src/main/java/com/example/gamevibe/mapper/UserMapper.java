@@ -2,6 +2,7 @@ package com.example.gamevibe.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.gamevibe.model.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author ZML
@@ -9,6 +10,7 @@ import com.example.gamevibe.model.entity.User;
 * @createDate 2024-06-11 21:18:53
 * @Entity .model.entity.User
 */
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
 }

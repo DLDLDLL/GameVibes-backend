@@ -12,9 +12,9 @@ import lombok.Data;
 /**
  * @TableName post_price
  */
-@TableName(value ="post_price")
+@TableName(value ="post_like")
 @Data
-public class PostPrice implements Serializable {
+public class PostLike implements Serializable {
 
     @TableId(type = IdType.AUTO)
     private Long id;

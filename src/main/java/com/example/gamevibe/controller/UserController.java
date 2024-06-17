@@ -1,7 +1,6 @@
 package com.example.gamevibe.controller;
 
 import com.example.gamevibe.common.BaseResponse;
-import com.example.gamevibe.common.ResultUtils;
 import com.example.gamevibe.model.entity.CustomUserDetails;
 import org.casbin.casdoor.entity.CasdoorUser;
 import org.casbin.casdoor.exception.CasdoorAuthException;
@@ -10,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -32,7 +34,7 @@ public class UserController {
         this.redirectUrl = redirectUrl;
     }
 
-    @GetMapping("/api/redirect-url")
+    @GetMapping("/redirect-url")
     public void getRedirectUrl(HttpServletResponse response) {
         try {
             String signinUrl = casdoorAuthService.getSigninUrl(redirectUrl);
@@ -44,7 +46,33 @@ public class UserController {
         }
     }
 
-/*    @GetMapping("/api/redirect-url")
+    @GetMapping("/signin")
+    public void signin(@RequestParam("code") String code, @RequestParam("state") String state, HttpServletResponse response) throws IOException {
+        try {
+            String token = casdoorAuthService.getOAuthToken(code, state);
+            Cookie cookie = new Cookie("token", token);
+            response.addCookie(cookie);
+            response.sendRedirect("/index");
+        } catch (CasdoorAuthException exception) {
+            logger.error("casdoor auth exception", exception);
+        }
+    }
+
+
+    public String getUid() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        CasdoorUser casdoorUser = customUserDetails.getCasdoorUser();
+        return casdoorUser.getId();
+    }
+
+    @GetMapping("/api/xxx")
+    public BaseResponse xxx() {
+        System.out.println(getUid());
+        return null;
+    }
+
+    /*    @GetMapping("/api/redirect-url")
     public BaseResponse getRedirectUrl() {
         try {
             String signinUrl = casdoorAuthService.getSigninUrl(redirectUrl);
@@ -68,24 +96,4 @@ public class UserController {
             return ResultUtils.error(exception.getMessage());
         }
     }*/
-
-
-    @GetMapping("/api/signin")
-    public void signin(@RequestParam("code") String code, @RequestParam("state") String state, HttpServletResponse response) throws IOException {
-        try {
-            String token = casdoorAuthService.getOAuthToken(code, state);
-            Cookie cookie = new Cookie("token", token);
-            response.addCookie(cookie);
-            response.sendRedirect("/index");
-        } catch (CasdoorAuthException exception) {
-            logger.error("casdoor auth exception", exception);
-        }
-    }
-
-    @GetMapping("/api/userinfo")
-    public BaseResponse userinfo(Authentication authentication) {
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        CasdoorUser casdoorUser = customUserDetails.getCasdoorUser();
-        return ResultUtils.success(casdoorUser);
-    }
 }
