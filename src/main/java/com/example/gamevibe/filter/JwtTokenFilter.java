@@ -42,7 +42,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         final String token = header.replace("Bearer ", "");
 
         // get user identity and set it on the spring security context
-        UserDetails userDetails = null;
+        UserDetails userDetails;
         try {
             CasdoorUser casdoorUser = casdoorAuthService.parseJwtToken(token);
             userDetails = new CustomUserDetails(casdoorUser);
