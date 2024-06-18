@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 帖子搜索分页查询请求 dto
@@ -11,7 +12,6 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class PostQueryRequest extends PageRequest implements Serializable {
-
     /**
      * 搜索词
      */

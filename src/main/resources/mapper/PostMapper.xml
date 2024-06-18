@@ -5,21 +5,21 @@
 <mapper namespace="com.example.gamevibe.mapper.PostMapper">
 
     <resultMap id="BaseResultMap" type="com.example.gamevibe.model.entity.Post">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="user_id" column="user_id" jdbcType="BIGINT"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="type" column="type" jdbcType="VARCHAR"/>
-            <result property="images" column="images" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="location" column="location" jdbcType="VARCHAR"/>
-            <result property="comments" column="comments" jdbcType="INTEGER"/>
-            <result property="likes" column="likes" jdbcType="INTEGER"/>
-            <result property="favours" column="favours" jdbcType="INTEGER"/>
-            <result property="pv" column="pv" jdbcType="BIGINT"/>
-            <result property="post_time" column="post_time" jdbcType="TIMESTAMP"/>
-            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="is_delete" column="is_delete" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="user_id" column="user_id" jdbcType="BIGINT"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="images" column="images" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="location" column="location" jdbcType="VARCHAR"/>
+        <result property="comments" column="comments" jdbcType="INTEGER"/>
+        <result property="likes" column="likes" jdbcType="INTEGER"/>
+        <result property="favours" column="favours" jdbcType="INTEGER"/>
+        <result property="pv" column="pv" jdbcType="BIGINT"/>
+        <result property="post_time" column="post_time" jdbcType="TIMESTAMP"/>
+        <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="is_delete" column="is_delete" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
