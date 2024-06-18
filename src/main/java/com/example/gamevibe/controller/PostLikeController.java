@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Api(tags = "帖子点赞模块")
 @RestController
@@ -27,7 +26,7 @@ public class PostLikeController {
     @ApiImplicitParam(name = "pageRequest", value = "分页参数", paramType = "body")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
-    public BaseResponse<PageVO<List<MyPostLikeVO>, MyPostLikeVO>> listPostLikeVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
+    public BaseResponse<PageVO<MyPostLikeVO>> listPostLikeVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
         return ResultUtils.success(postLikeService.getLikePostVOPage(pageRequest));
     }
 

@@ -13,7 +13,6 @@ import io.swagger.annotations.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Api(tags = "帖子收藏模块")
 @RestController
@@ -27,7 +26,7 @@ public class PostCollectController {
     @ApiImplicitParam(name = "pageRequest", value = "分页参数", paramType = "body")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
-    public BaseResponse<PageVO<List<MyPostCollectVO>, MyPostCollectVO>> listPostCollectVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
+    public BaseResponse<PageVO<MyPostCollectVO>> listPostCollectVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
         return ResultUtils.success(postCollectService.getCollectPostVOPage(pageRequest));
     }
 
