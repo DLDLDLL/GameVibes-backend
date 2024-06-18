@@ -3,6 +3,8 @@ package com.example.gamevibe.mapper;
 import com.example.gamevibe.model.entity.Post;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.Date;
+import java.util.List;
 /**
 * @author D
 * @description 针对表【post(帖子表)】的数据库操作Mapper
@@ -11,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface PostMapper extends BaseMapper<Post> {
 
+    List<Post> listPostWithDelete(Date minUpdateTime);
 }
 
 

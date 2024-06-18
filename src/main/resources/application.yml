@@ -1,6 +1,5 @@
 server:
   port: 8080
-
 spring:
   application:
     name: GameVibes
@@ -12,25 +11,30 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/gamevibe?useSSL=false&serverTimezone=UTC
-    username: gamevibe
-    password: PESEbftdxRPBsFKk
+    username: root
+    password: 159166
+  #    username: gamevibe
+#    password: PESEbftdxRPBsFKk
+  # Elasticsearch 配置
+  elasticsearch:
+    uris: http://localhost:9200
+    username: root
+    password: 123456
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
-      logic-delete-field: isDelete # 全局逻辑删除的实体字段名
+      logic-delete-field: is_delete # 全局逻辑删除的实体字段名
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
-
 knife4j:
   enable: true
   basic:
     enable: true
     username: password
     password: username
-
 casdoor:
   endpoint: http://localhost:8000
   client-id: 1f20ed3e6ad105928baf
@@ -68,4 +72,3 @@ casdoor:
   organization-name: built-in
   application-name: app-built-in
   redirect-url: http://localhost:8080/api/signin
-

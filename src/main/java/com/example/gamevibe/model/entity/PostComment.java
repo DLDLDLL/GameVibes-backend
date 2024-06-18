@@ -1,11 +1,11 @@
 package com.example.gamevibe.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -18,7 +18,7 @@ public class PostComment implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -37,18 +37,42 @@ public class PostComment implements Serializable {
     private String content;
 
     /**
+     * 评论数量
+     */
+    private Integer comments;
+
+    /**
+     * 点赞数量
+     */
+    private Integer likes;
+
+    /**
+     * 评论地点
+     */
+    private String location;
+
+    /**
+     * 评论发布时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date post_name;
+
+    /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date create_time;
 
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date update_time;
 
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer is_delete;
 
     @TableField(exist = false)

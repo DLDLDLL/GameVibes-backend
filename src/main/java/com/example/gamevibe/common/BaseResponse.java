@@ -1,6 +1,5 @@
 package com.example.gamevibe.common;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
