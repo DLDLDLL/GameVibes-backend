@@ -6,7 +6,6 @@ import com.example.gamevibe.model.vo.MyPostLikeVO;
 import com.example.gamevibe.model.entity.PostLike;
 import com.example.gamevibe.model.vo.PageVO;
 
-import java.util.List;
 
 /**
 * @author ZML
@@ -15,9 +14,11 @@ import java.util.List;
 */
 public interface PostLikeService extends IService<PostLike> {
 
-    PageVO<List<MyPostLikeVO>, MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest);
+    PageVO<MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest);
 
-    void like(String post_id);
+    void like(Long post_id);
 
-    void unLike(String post_id);
+    void unLike(Long post_id);
+
+    boolean isLike(Long post_id);
 }

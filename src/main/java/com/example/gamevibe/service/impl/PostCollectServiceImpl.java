@@ -13,7 +13,6 @@ import com.example.gamevibe.service.PostCollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 /**
 * @author ZML
@@ -27,26 +26,32 @@ public class PostCollectServiceImpl extends ServiceImpl<PostCollectMapper, PostC
     private PostCollectMapper postCollectMapper;
 
     @Override
-    public PageVO<List<MyPostCollectVO>, MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest) {
+    public PageVO<MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         String user_id = BaseContext.getCurrentId();
 
         Page<MyPostCollectVO> collectPostPage = postCollectMapper.getCollectPostVOPage(user_id, new Page<>(current, size));
 
-        return new PageVO<List<MyPostCollectVO>, MyPostCollectVO>().objToVO(collectPostPage);
+        return new PageVO<MyPostCollectVO>().objToVO(collectPostPage);
     }
 
     @Override
-    public void collect(String post_id) {
+    public void collect(Long post_id) {
         String user_id = BaseContext.getCurrentId();
         postCollectMapper.saveCollect(user_id, post_id);
     }
 
     @Override
-    public void unCollect(String post_id) {
+    public void unCollect(Long post_id) {
         String user_id = BaseContext.getCurrentId();
         postCollectMapper.cancelCollect(user_id, post_id);
+    }
+
+    @Override
+    public boolean isCollect(Long post_id) {
+        String user_id = BaseContext.getCurrentId();
+        return postCollectMapper.isCollect(user_id, post_id) == 1;
     }
 
 }

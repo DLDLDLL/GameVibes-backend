@@ -5,7 +5,6 @@ import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.vo.MyPostCollectVO;
 import com.example.gamevibe.model.entity.PostCollect;
 import com.example.gamevibe.model.vo.PageVO;
-import java.util.List;
 
 /**
 * @author ZML
@@ -14,9 +13,11 @@ import java.util.List;
 */
 public interface PostCollectService extends IService<PostCollect> {
 
-    PageVO<List<MyPostCollectVO>, MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest);
+    PageVO<MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest);
 
-    void collect(String post_id);
+    void collect(Long post_id);
 
-    void unCollect(String post_id);
+    void unCollect(Long post_id);
+
+    boolean isCollect(Long post_id);
 }

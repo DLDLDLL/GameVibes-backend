@@ -38,7 +38,12 @@ public class FullSyncPostToEs implements CommandLineRunner {
         log.info("FullSyncPostToEs start, total {}", total);
         for (int i = 0; i < total; i += pageSize) {
             int end = Math.min(i + pageSize, total);
-            postEsDao.saveAll(postEsDTOList.subList(i, end));
+            try {
+                postEsDao.saveAll(postEsDTOList.subList(i, end));
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
+            }
+
         }
         log.info("FullSyncPostToEs end, total {}", total);
     }

@@ -24,7 +24,7 @@ public class Post implements Serializable {
     /**
      * 用户id
      */
-    private Long user_id;
+    private String user_id;
 
     /**
      * 标题

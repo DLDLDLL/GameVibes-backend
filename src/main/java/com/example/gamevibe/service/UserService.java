@@ -12,4 +12,6 @@ import com.example.gamevibe.model.vo.UserVO;
 public interface UserService extends IService<User> {
 
     UserVO getUserInfo();
+
+    void register();
 }
