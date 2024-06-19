@@ -7,23 +7,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 public class BaseContext {
 
-    public static CasdoorUser getCurrentUser() {
+    public static String getCurrentId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        return customUserDetails.getCasdoorUser();
+        CasdoorUser casdoorUser = customUserDetails.getCasdoorUser();
+        return casdoorUser.getId();
     }
-
-    public static String getCurrentId() {
-        return getCurrentUser().getId();
-    }
-
-    public static String getCurrentAvatar() {
-        return getCurrentUser().getAvatar();
-    }
-
-    public static String getCurrentName() {
-        return getCurrentUser().getName();
-    }
-
 
 }

@@ -4,54 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.gamevibe.mapper.UserMapper">
 
-
-    <resultMap id="UserVO" type="com.example.gamevibe.model.vo.UserVO">
-        <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="user_id" column="user_id" jdbcType="BIGINT"/>
-        <result property="nick_name" column="nick_name" jdbcType="VARCHAR"/>
-        <result property="intro" column="intro" jdbcType="VARCHAR"/>
-        <result property="ip_addr" column="ip_addr" jdbcType="VARCHAR"/>
-        <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="focus_count" column="focus_count" jdbcType="INTEGER" />
-        <result property="fans_count" column="fans_count" jdbcType="INTEGER" />
-        <result property="like_collect_count" column="like_collect_count" jdbcType="BIGINT" />
+    <resultMap id="BaseResultMap" type="com.example.gamevibe.model.entity.User">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="user_id" column="user_id" jdbcType="VARCHAR"/>
+            <result property="nick_name" column="nick_name" jdbcType="VARCHAR"/>
+            <result property="intro" column="intro" jdbcType="VARCHAR"/>
+            <result property="ip_addr" column="ip_addr" jdbcType="VARCHAR"/>
+            <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="is_delete" column="is_delete" jdbcType="TINYINT"/>
     </resultMap>
 
-    <select id="getUserInfo" parameterType="String" resultMap="UserVO">
-        SELECT u.id,
-               u.user_id,
-               '' AS avatar,
-               '' AS nick_name,
-               u.create_time,
-               u.ip_addr,
-               u.intro,
-               IFNULL(fu.focus_count, 0) as focus_count,
-               IFNULL(fu.fans_count, 0) as fans_count,
-               IFNULL(
-                       (SELECT COUNT(pl.user_id) AS like_count
-                        FROM post p
-                                 INNER JOIN post_like pl ON p.id = pl.post_id AND pl.state = 1
-                        WHERE p.user_id = #{user_id}
-                          AND p.is_delete = 0
-                        GROUP BY p.user_id),
-                    0)
-                   +
-               IFNULL(
-                       (SELECT COUNT(pc.user_id) AS collect_count
-                        FROM post p
-                                 INNER JOIN post_collect pc ON p.id = pc.post_id AND pc.state = 1
-                        WHERE p.user_id = #{user_id}
-                          AND p.is_delete = 0
-                        GROUP BY p.user_id),
-                   0) AS like_collect_count
-        FROM (SELECT * FROM user WHERE user_id = #{user_id} AND is_delete = 0) u
-                 LEFT JOIN (SELECT user_id,
-                                   SUM(CASE WHEN focused_id = #{user_id} THEN 1 ELSE 0 END) as fans_count,
-                                   SUM(CASE WHEN user_id = #{user_id} THEN 1 ELSE 0 END)    as focus_count
-                            FROM focus_user
-                            WHERE user_id = #{user_id}
-                               OR focused_id = #{user_id}
-                            GROUP BY user_id) fu ON fu.user_id = u.user_id;
-    </select>
-
+    <sql id="Base_Column_List">
+        id,user_id,nick_name,
+        intro,ip_addr,create_time,
+        update_time,is_delete
+    </sql>
 </mapper>

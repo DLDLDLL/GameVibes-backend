@@ -47,7 +47,14 @@ public class IncSyncPostToEs {
         log.info("IncSyncPostToEs start, total {}", total);
         for (int i = 0; i < total; i += pageSize) {
             int end = Math.min(i + pageSize, total);
-            postEsDao.saveAll(postEsDTOList.subList(i, end));
+            try {
+                postEsDao.saveAll(postEsDTOList.subList(i, end));
+            } catch (Exception e) {
+                if(!(e.getMessage().contains("200 OK"))){
+                    log.error("es增量同步错误",e);
+                    return;
+                }
+            }
         }
         log.info("IncSyncPostToEs end, total {}", total);
     }

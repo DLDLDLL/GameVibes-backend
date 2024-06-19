@@ -2,6 +2,7 @@ package com.example.gamevibe.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.gamevibe.common.BaseResponse;
+import com.example.gamevibe.common.ErrorCode;
 import com.example.gamevibe.common.ResultUtils;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.dto.PostQueryRequest;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @Api(tags = "帖子模块")
 @RestController
@@ -80,7 +82,16 @@ public class PostController {
     @PostMapping("/search")
     public BaseResponse<PageResult> searchPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,
                                                        HttpServletRequest request) {
-        return ResultUtils.success(postService.searchFromEs(postQueryRequest));
+        PageResult pageResult=new PageResult();
+        try{
+            pageResult = postService.searchFromEs(postQueryRequest);
+        }catch (IOException e){
+            if(!(e.getMessage().contains("200 OK"))){
+                log.error("搜索错误",e);
+                return ResultUtils.error(ErrorCode.SYSTEM_ERROR,"搜索错误");
+            }
+        }
+        return ResultUtils.success(pageResult);
     }
 
 }

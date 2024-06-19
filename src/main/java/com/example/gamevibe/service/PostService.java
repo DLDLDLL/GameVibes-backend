@@ -8,6 +8,7 @@ import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.model.vo.PageResult;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /**
  * @author D
@@ -21,6 +22,6 @@ public interface PostService extends IService<Post> {
 
     Post getPostById(long id, HttpServletRequest request);
 
-    PageResult searchFromEs(PostQueryRequest postQueryRequest);
+    PageResult searchFromEs(PostQueryRequest postQueryRequest)throws IOException;
 
 }

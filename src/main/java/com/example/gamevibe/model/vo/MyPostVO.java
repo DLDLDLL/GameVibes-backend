@@ -39,9 +39,6 @@ public class MyPostVO implements Serializable {
     @ApiModelProperty(value = "帖子发布时间", example = "2024-06-18T11:00:42")
     protected LocalDateTime post_time;
 
-    @ApiModelProperty(value = "帖子类型", example = "宝可梦系列")
-    protected String type;
-
     /**
      * 帖子标题
      */

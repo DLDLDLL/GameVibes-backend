@@ -6,10 +6,9 @@ import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
-public class PageVO<T> implements Serializable {
+public class PageVO<T, E> implements Serializable {
 
     /**
      * 当前页
@@ -33,10 +32,10 @@ public class PageVO<T> implements Serializable {
      * 记录
      */
     @ApiModelProperty(value = "响应数据")
-    private List<T> records;
+    private T records;
 
-    public PageVO<T> objToVO(Page<T> page) {
-        PageVO<T> pageVO = new PageVO<>();
+    public PageVO<T, E> objToVO(Page<E> page) {
+        PageVO<T, E> pageVO = new PageVO<>();
         BeanUtils.copyProperties(page, pageVO);
         return pageVO;
     }

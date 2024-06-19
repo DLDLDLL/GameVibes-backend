@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.example.gamevibe.model.entity.Post">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="user_id" column="user_id" jdbcType="BIGINT"/>
+        <result property="user_id" column="user_id" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="VARCHAR"/>
         <result property="images" column="images" jdbcType="VARCHAR"/>

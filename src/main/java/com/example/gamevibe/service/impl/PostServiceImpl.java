@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,7 +71,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
     }
 
     @Override
-    public PageResult searchFromEs(PostQueryRequest postQueryRequest) {
+    public PageResult searchFromEs(PostQueryRequest postQueryRequest) throws IOException {
         String searchText = postQueryRequest.getSearchText();
         // es 起始页为 0
         long current = postQueryRequest.getCurrent() - 1;

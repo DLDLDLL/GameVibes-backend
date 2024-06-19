@@ -24,7 +24,7 @@ public class PostComment implements Serializable {
     /**
      * 用户id
      */
-    private Long user_id;
+    private String user_id;
 
     /**
      * 帖子id

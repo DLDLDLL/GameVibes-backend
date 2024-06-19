@@ -38,6 +38,6 @@ public class UserVO implements Serializable {
     private int fans_count;
 
     @ApiModelProperty(value = "点赞与收藏数", example = "1234")
-    private long like_collect_count;
+    private int like_collect_count;
 
 }

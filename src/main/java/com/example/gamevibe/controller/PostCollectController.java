@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Api(tags = "帖子收藏模块")
 @RestController
@@ -26,7 +27,7 @@ public class PostCollectController {
     @ApiImplicitParam(name = "pageRequest", value = "分页参数", paramType = "body")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
-    public BaseResponse<PageVO<MyPostCollectVO>> listPostCollectVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
+    public BaseResponse<PageVO<List<MyPostCollectVO>, MyPostCollectVO>> listPostCollectVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
         return ResultUtils.success(postCollectService.getCollectPostVOPage(pageRequest));
     }
 
@@ -34,7 +35,7 @@ public class PostCollectController {
     @ApiImplicitParam(name = "post_id", value = "帖子id", required = true, paramType = "query")
     @ApiResponse(code = 0, message = "ok")
     @PostMapping("/collect")
-    public BaseResponse<String> collect(@RequestParam("post_id") Long post_id) {
+    public BaseResponse<String> collect(@RequestParam("post_id") String post_id) {
         postCollectService.collect(post_id);
         return ResultUtils.success();
     }
@@ -43,7 +44,7 @@ public class PostCollectController {
     @ApiImplicitParam(name = "post_id", value = "帖子id", required = true, paramType = "query")
     @ApiResponse(code = 0, message = "ok")
     @PostMapping("/un_collect")
-    public BaseResponse<String> unCollect(@RequestParam("post_id") Long post_id) {
+    public BaseResponse<String> unCollect(@RequestParam("post_id") String post_id) {
         postCollectService.unCollect(post_id);
         return ResultUtils.success();
     }

@@ -19,7 +19,7 @@ public class User implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private Long user_id;
+    private String user_id;
 
     private String nick_name;
 

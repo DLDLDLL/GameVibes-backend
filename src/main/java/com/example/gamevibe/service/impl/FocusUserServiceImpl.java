@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 /**
 * @author ZML
@@ -28,25 +29,25 @@ public class FocusUserServiceImpl extends ServiceImpl<FocusUserMapper, FocusUser
     private FocusUserMapper focusUserMapper;
 
     @Override
-    public PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest) {
+    public PageVO<List<FocusUserVO>, FocusUserVO> getFocusUserVOPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         String user_id = BaseContext.getCurrentId();
 
         Page<FocusUserVO> focusUserPage = focusUserMapper.getFocusUserVOPage(user_id, new Page<>(current, size));
 
-        return new PageVO<FocusUserVO>().objToVO(focusUserPage);
+        return new PageVO<List<FocusUserVO>, FocusUserVO>().objToVO(focusUserPage);
     }
 
     @Override
-    public PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String query_user_id) {
+    public PageVO<List<FocusUserVO>, FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String query_user_id) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         String user_id = BaseContext.getCurrentId();
 
         Page<FocusUserVO> focusUserPage = focusUserMapper.getFocusUserVOPage(user_id, query_user_id, new Page<>(current, size));
 
-        return new PageVO<FocusUserVO>().objToVO(focusUserPage);
+        return new PageVO<List<FocusUserVO>, FocusUserVO>().objToVO(focusUserPage);
     }
 
     @Override

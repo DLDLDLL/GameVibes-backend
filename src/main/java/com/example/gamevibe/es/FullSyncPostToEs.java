@@ -1,5 +1,7 @@
 package com.example.gamevibe.es;
 
+import com.example.gamevibe.common.ErrorCode;
+import com.example.gamevibe.common.ResultUtils;
 import com.example.gamevibe.model.dto.PostEsDTO;
 import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.service.PostService;
@@ -40,10 +42,12 @@ public class FullSyncPostToEs implements CommandLineRunner {
             int end = Math.min(i + pageSize, total);
             try {
                 postEsDao.saveAll(postEsDTOList.subList(i, end));
-            } catch (RuntimeException e) {
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                if(!(e.getMessage().contains("200 OK"))){
+                    log.error("es全量同步错误",e);
+                    return;
+                }
             }
-
         }
         log.info("FullSyncPostToEs end, total {}", total);
     }

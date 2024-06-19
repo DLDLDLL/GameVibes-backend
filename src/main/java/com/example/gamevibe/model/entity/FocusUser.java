@@ -19,9 +19,9 @@ public class FocusUser implements Serializable {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private Long user_id;
+    private String user_id;
 
-    private Long focused_id;
+    private String focused_id;
 
     private Date create_time;
 
