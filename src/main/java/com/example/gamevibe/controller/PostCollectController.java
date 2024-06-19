@@ -34,7 +34,7 @@ public class PostCollectController {
     @ApiImplicitParam(name = "post_id", value = "帖子id", required = true, paramType = "query")
     @ApiResponse(code = 0, message = "ok")
     @PostMapping("/collect")
-    public BaseResponse<String> collect(@RequestParam("post_id") String post_id) {
+    public BaseResponse<String> collect(@RequestParam("post_id") Long post_id) {
         postCollectService.collect(post_id);
         return ResultUtils.success();
     }
@@ -43,7 +43,7 @@ public class PostCollectController {
     @ApiImplicitParam(name = "post_id", value = "帖子id", required = true, paramType = "query")
     @ApiResponse(code = 0, message = "ok")
     @PostMapping("/un_collect")
-    public BaseResponse<String> unCollect(@RequestParam("post_id") String post_id) {
+    public BaseResponse<String> unCollect(@RequestParam("post_id") Long post_id) {
         postCollectService.unCollect(post_id);
         return ResultUtils.success();
     }

@@ -27,6 +27,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.getUserInfo(user_id);
     }
 
+    @Override
+    public void register() {
+        String user_id = BaseContext.getCurrentId();
+        userMapper.register(user_id);
+    }
+
 
 }
 

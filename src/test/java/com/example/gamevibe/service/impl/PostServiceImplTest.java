@@ -1,22 +1,14 @@
 package com.example.gamevibe.service.impl;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.gamevibe.mapper.PostMapper;
 import com.example.gamevibe.model.entity.News;
 import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.service.NewsService;
 import com.example.gamevibe.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.example.gamevibe.common.Constants.POST_PV_KEY;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PostServiceImplTest {

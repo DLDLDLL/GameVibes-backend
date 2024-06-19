@@ -37,15 +37,21 @@ public class PostCollectServiceImpl extends ServiceImpl<PostCollectMapper, PostC
     }
 
     @Override
-    public void collect(String post_id) {
+    public void collect(Long post_id) {
         String user_id = BaseContext.getCurrentId();
         postCollectMapper.saveCollect(user_id, post_id);
     }
 
     @Override
-    public void unCollect(String post_id) {
+    public void unCollect(Long post_id) {
         String user_id = BaseContext.getCurrentId();
         postCollectMapper.cancelCollect(user_id, post_id);
+    }
+
+    @Override
+    public boolean isCollect(Long post_id) {
+        String user_id = BaseContext.getCurrentId();
+        return postCollectMapper.isCollect(user_id, post_id) == 1;
     }
 
 }

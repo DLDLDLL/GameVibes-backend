@@ -15,7 +15,9 @@ public interface PostCollectService extends IService<PostCollect> {
 
     PageVO<MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest);
 
-    void collect(String post_id);
+    void collect(Long post_id);
 
-    void unCollect(String post_id);
+    void unCollect(Long post_id);
+
+    boolean isCollect(Long post_id);
 }

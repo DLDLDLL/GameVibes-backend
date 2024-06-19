@@ -10,11 +10,11 @@ spring:
   # 数据库
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/gamevibe?useSSL=false&serverTimezone=UTC
-    username: root
-    password: 159166
-  #    username: gamevibe
-#    password: PESEbftdxRPBsFKk
+    url: jdbc:mysql://8.138.154.250:3306/gamevibe?useSSL=false&serverTimezone=UTC
+#    username: root
+#    password: 159166
+    username: gamevibe
+    password: PESEbftdxRPBsFKk
   # Elasticsearch 配置
   elasticsearch:
     uris: http://localhost:9200

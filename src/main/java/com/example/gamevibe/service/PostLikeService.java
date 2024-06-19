@@ -16,7 +16,9 @@ public interface PostLikeService extends IService<PostLike> {
 
     PageVO<MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest);
 
-    void like(String post_id);
+    void like(Long post_id);
 
-    void unLike(String post_id);
+    void unLike(Long post_id);
+
+    boolean isLike(Long post_id);
 }

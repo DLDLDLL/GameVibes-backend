@@ -34,7 +34,7 @@ public class PostLikeController {
     @ApiImplicitParam(name = "post_id", value = "帖子id", required = true, paramType = "query")
     @ApiResponse(code = 0, message = "ok")
     @PostMapping("/like")
-    public BaseResponse<String> like(@RequestParam("post_id") String post_id) {
+    public BaseResponse<String> like(@RequestParam("post_id") Long post_id) {
         postLikeService.like(post_id);
         return ResultUtils.success();
     }
@@ -43,7 +43,7 @@ public class PostLikeController {
     @ApiImplicitParam(name = "post_id", value = "帖子id", required = true, paramType = "query")
     @ApiResponse(code = 0, message = "ok")
     @PostMapping("/un_like")
-    public BaseResponse<String> unLike(@RequestParam("post_id") String post_id) {
+    public BaseResponse<String> unLike(@RequestParam("post_id") Long post_id) {
         postLikeService.unLike(post_id);
         return ResultUtils.success();
     }
