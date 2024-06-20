@@ -1,10 +1,13 @@
 package com.example.gamevibe.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.gamevibe.model.dto.GameMarkDTO;
 import com.example.gamevibe.model.entity.GameMark;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.gamevibe.model.vo.GameMarkVO;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 
@@ -24,6 +27,8 @@ public interface GameMarkMapper extends BaseMapper<GameMark> {
             "ORDER BY gm.create_time DESC ")
     Page<GameMarkVO> getGameMarkVOPageLatest(Long game_id, Page<?> page);
 
-//    @Insert("")
-//    void mark()
+    @Insert("INSERT INTO game_mark (user_id, game_id, score, `comment`) VALUES (#{gm.user_id}, #{gm.game_id}, #{gm.score}, #{gm.comment}) ")
+    void mark(@Param(value = "gm") GameMarkDTO gameMarkDTO);
+
+
 }
