@@ -8,11 +8,6 @@ import java.io.Serializable;
 public class PostCommentAddRequest implements Serializable {
 
     /**
-     * 用户id
-     */
-    private String user_id;
-
-    /**
      * 帖子id
      */
     private Long post_id;

@@ -3,14 +3,10 @@ package com.example.gamevibe.model.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class PostAddRequest implements Serializable {
-
-    /**
-     * 用户id
-     */
-    private String user_id;
 
     /**
      * 标题
@@ -23,9 +19,9 @@ public class PostAddRequest implements Serializable {
     private String type;
 
     /**
-     * 图片，多个图片以,隔开
+     * 图片
      */
-    private String images;
+    private List<String> images;
 
     /**
      * 帖子内容
