@@ -11,9 +11,7 @@ import org.casbin.casdoor.service.CasdoorAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -41,6 +39,14 @@ public class UserController {
     @GetMapping("/user_info")
     public BaseResponse<UserVO> getUserInfo() {
         return ResultUtils.success(userService.getUserInfo());
+    }
+
+    @ApiOperation(value = "注册")
+    @ApiResponse(code = 0, message = "ok")
+    @PostMapping("/register")
+    public BaseResponse<String> register(@RequestParam String avatar) {
+        userService.register(avatar);
+        return ResultUtils.success();
     }
 
 
