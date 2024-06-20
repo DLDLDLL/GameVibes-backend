@@ -6,7 +6,6 @@ import com.example.gamevibe.model.entity.FocusUser;
 import com.example.gamevibe.model.vo.FocusUserVO;
 import com.example.gamevibe.model.vo.PageVO;
 
-import java.util.List;
 
 /**
 * @author ZML
@@ -15,9 +14,9 @@ import java.util.List;
 */
 public interface FocusUserService extends IService<FocusUser> {
 
-    PageVO<List<FocusUserVO>, FocusUserVO> getFocusUserVOPage(PageRequest pageRequest);
+    PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest);
 
-    PageVO<List<FocusUserVO>, FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String query_user_id);
+    PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String query_user_id);
 
     void focus(String focus_id);
 

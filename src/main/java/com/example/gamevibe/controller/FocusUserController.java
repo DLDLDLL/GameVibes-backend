@@ -11,7 +11,6 @@ import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Optional;
 
 @Api(tags = "关注用户模块")
@@ -29,7 +28,7 @@ public class FocusUserController {
     })
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
-    public BaseResponse<PageVO<List<FocusUserVO>, FocusUserVO>> listFocusUserVOByPage(@RequestBody(required = false) PageRequest pageRequest, @RequestParam(required = false) String query_user_id) {
+    public BaseResponse<PageVO<FocusUserVO>> listFocusUserVOByPage(@RequestBody(required = false) PageRequest pageRequest, @RequestParam(required = false) String query_user_id) {
         return ResultUtils.success(
                 Optional.ofNullable(query_user_id)
                         .filter(id -> !id.equals(BaseContext.getCurrentId()))
