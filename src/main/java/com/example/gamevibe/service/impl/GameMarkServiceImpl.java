@@ -3,6 +3,7 @@ package com.example.gamevibe.service.impl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.mapper.GameMarkMapper;
+import com.example.gamevibe.model.dto.GameMarkDTO;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.GameMark;
 import com.example.gamevibe.model.vo.GameMarkVO;
@@ -32,8 +33,8 @@ public class GameMarkServiceImpl extends ServiceImpl<GameMarkMapper, GameMark> i
     }
 
 //    @Override
-    public void mark(Long game_id) {
-
+    public void mark(GameMarkDTO gameMarkDTO) {
+        gameMarkMapper.mark(gameMarkDTO);
     }
 
 }
