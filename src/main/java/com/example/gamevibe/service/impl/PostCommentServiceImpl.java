@@ -3,6 +3,7 @@ package com.example.gamevibe.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.gamevibe.model.dto.PostCommentAddRequest;
 import com.example.gamevibe.model.dto.PostCommentQueryRequest;
 import com.example.gamevibe.model.entity.PostComment;
 import com.example.gamevibe.model.vo.PageResult;
@@ -41,6 +42,12 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
         pageResult.setTotal(page.getTotal());
         pageResult.setRecords(page.getRecords());
         return pageResult;
+    }
+
+    // TODO
+    @Override
+    public Long comment(PostCommentAddRequest id) {
+        return null;
     }
 }
 

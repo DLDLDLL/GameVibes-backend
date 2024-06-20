@@ -2,6 +2,7 @@ package com.example.gamevibe.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.gamevibe.model.dto.PageRequest;
+import com.example.gamevibe.model.dto.PostAddRequest;
 import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.entity.Post;
@@ -24,4 +25,5 @@ public interface PostService extends IService<Post> {
 
     PageResult searchFromEs(PostQueryRequest postQueryRequest)throws IOException;
 
+    Long addPost(PostAddRequest postAddRequest);
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.model.dto.PageRequest;
+import com.example.gamevibe.model.dto.PostAddRequest;
 import com.example.gamevibe.model.dto.PostEsDTO;
 import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.example.gamevibe.model.entity.Post;
@@ -111,6 +112,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         }
         page.setRecords(postList);
         return page;
+    }
+
+    @Override
+    public Long addPost(PostAddRequest postAddRequest) {
+        return null;
     }
 
 }

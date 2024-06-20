@@ -5,11 +5,13 @@ import com.example.gamevibe.common.BaseResponse;
 import com.example.gamevibe.common.ErrorCode;
 import com.example.gamevibe.common.ResultUtils;
 import com.example.gamevibe.model.dto.PageRequest;
+import com.example.gamevibe.model.dto.PostAddRequest;
 import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.service.PostService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -92,6 +94,13 @@ public class PostController {
             }
         }
         return ResultUtils.success(pageResult);
+    }
+
+    @ApiOperation(value = "发布帖子")
+    @PostMapping("/add")
+    public BaseResponse<Long> addPost(@RequestBody PostAddRequest postAddRequest,
+                                            HttpServletRequest request) {
+        return ResultUtils.success(postService.addPost(postAddRequest));
     }
 
 }
