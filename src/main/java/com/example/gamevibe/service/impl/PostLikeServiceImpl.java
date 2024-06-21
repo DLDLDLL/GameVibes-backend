@@ -39,13 +39,18 @@ public class PostLikeServiceImpl extends ServiceImpl<PostLikeMapper, PostLike> i
     @Override
     public void like(Long post_id) {
         String user_id = BaseContext.getCurrentId();
+        if (isLike(post_id)) return;
         postLikeMapper.saveLike(user_id, post_id);
+        postLikeMapper.updateLikes(post_id, 1);
     }
 
     @Override
     public void unLike(Long post_id) {
         String user_id = BaseContext.getCurrentId();
-        postLikeMapper.cancelLike(user_id, post_id);
+        if (isLike(post_id)) {
+            postLikeMapper.cancelLike(user_id, post_id);
+            postLikeMapper.updateLikes(post_id, -1);
+        }
     }
 
     @Override

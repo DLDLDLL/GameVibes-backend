@@ -22,8 +22,7 @@ public class PostLikeController {
     @Resource
     private PostLikeService postLikeService;
 
-    @ApiOperation(value = "获取帖子点赞列表", notes = "pageRequest默认为(current: 1, pageSize: 10)")
-    @ApiImplicitParam(name = "pageRequest", value = "分页参数", paramType = "body")
+    @ApiOperation(value = "我的点赞", notes = "pageRequest默认为(current: 1, pageSize: 10)")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
     public BaseResponse<PageVO<MyPostLikeVO>> listPostLikeVOByPage(@RequestBody(required = false) PageRequest pageRequest) {

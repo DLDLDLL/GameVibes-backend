@@ -5,6 +5,7 @@ import com.example.gamevibe.model.dto.GameMarkDTO;
 import com.example.gamevibe.model.entity.GameMark;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.gamevibe.model.vo.GameMarkVO;
+import com.example.gamevibe.model.vo.MyGameMarkVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,15 +21,29 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface GameMarkMapper extends BaseMapper<GameMark> {
 
-    @Select("SELECT u.user_id, '' AS avatar, '' AS nick_name, gm.create_time, gm.score, gm.score " +
+    @Select("SELECT gm.user_id, gm.user_avatar, gm.user_name, gm.create_time, gm.score, gm.comment " +
             "FROM game_mark gm " +
-            "LEFT JOIN user u on gm.user_id = u.user_id AND u.is_delete = 0 " +
             "WHERE gm.game_id = #{game_id} AND gm.is_delete = 0 " +
             "ORDER BY gm.create_time DESC ")
     Page<GameMarkVO> getGameMarkVOPageLatest(Long game_id, Page<?> page);
 
-    @Insert("INSERT INTO game_mark (user_id, game_id, score, `comment`) VALUES (#{gm.user_id}, #{gm.game_id}, #{gm.score}, #{gm.comment}) ")
+    @Select("SELECT COUNT(*) FROM game_mark WHERE user_id = #{gm.user_id} AND game_id =#{gm.game_id} ")
+    int isMark(@Param("gm") GameMarkDTO gameMarkDTO);
+
+    @Insert("INSERT INTO game_mark (user_id, user_name, user_avatar, game_id, score, `comment`, image) " +
+            "SELECT #{gm.user_id}, u.nick_name, u.avatar, #{gm.game_id}, #{gm.score}, #{gm.comment}, JSON_EXTRACT(g.images, '$[0]') " +
+            "FROM user u " +
+            "JOIN game g ON g.id = #{gm.game_id} " +
+            "WHERE EXISTS (SELECT 1 FROM game WHERE id = #{gm.game_id})")
     void mark(@Param(value = "gm") GameMarkDTO gameMarkDTO);
+
+    @Select("SELECT gm.user_id, gm.user_avatar, gm.user_name, gm.create_time, gm.score, gm.comment, gm.game_id, " +
+            "g.name AS game_name, g.score AS game_score, JSON_UNQUOTE(JSON_EXTRACT(g.images, '$[0]')) AS image " +
+            "FROM game_mark gm " +
+            "LEFT JOIN game g ON gm.game_id = g.id AND g.is_delete = 0 " +
+            "WHERE gm.user_id = #{user_id} AND gm.is_delete = 0 " +
+            "ORDER BY gm.create_time DESC ")
+    Page<MyGameMarkVO> getMyGameMarkVOPageLatest(String user_id, Page<?> page);
 
 
 }

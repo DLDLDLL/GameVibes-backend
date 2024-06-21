@@ -52,13 +52,25 @@ public class FocusUserServiceImpl extends ServiceImpl<FocusUserMapper, FocusUser
     @Override
     public void focus(String focus_id) {
         String user_id = BaseContext.getCurrentId();
+        if (isFocus(focus_id)) return;
         focusUserMapper.saveFocus(user_id, focus_id);
+        focusUserMapper.updateFocusCount(user_id, 1);
+        focusUserMapper.updateFansCount(focus_id, 1);
     }
 
     @Override
     public void unFocus(String focus_id) {
         String user_id = BaseContext.getCurrentId();
-        focusUserMapper.cancelFocus(user_id, focus_id);
+        if (isFocus(focus_id)) {
+            focusUserMapper.cancelFocus(user_id, focus_id);
+            focusUserMapper.updateFocusCount(user_id, -1);
+            focusUserMapper.updateFansCount(focus_id, -1);
+        }
+    }
+
+    private boolean isFocus(String focus_id) {
+        String user_id = BaseContext.getCurrentId();
+        return focusUserMapper.isFocus(user_id, focus_id) == 1;
     }
 
 

@@ -2,6 +2,7 @@ package com.example.gamevibe.mapper;
 
 import com.example.gamevibe.model.entity.Post;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Date;
 import java.util.List;
@@ -11,9 +12,14 @@ import java.util.List;
 * @createDate 2024-06-09 09:55:39
 * @Entity com.example.gamevibe.model.entity.Post
 */
+@Mapper
 public interface PostMapper extends BaseMapper<Post> {
 
     List<Post> listPostWithDelete(Date minUpdateTime);
+
+
+
+
 }
 
 

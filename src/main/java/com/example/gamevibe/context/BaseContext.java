@@ -5,24 +5,38 @@ import org.casbin.casdoor.entity.CasdoorUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Optional;
+
 public class BaseContext {
 
     public static CasdoorUser getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        return customUserDetails.getCasdoorUser();
+        CasdoorUser casdoorUser = null;
+        if (authentication.getPrincipal() instanceof CustomUserDetails customUserDetails) {
+            casdoorUser = customUserDetails.getCasdoorUser();
+        }
+        return casdoorUser;
     }
 
     public static String getCurrentId() {
-        return getCurrentUser().getId();
+        CasdoorUser user = getCurrentUser();
+        return Optional.ofNullable(user)
+                .map(CasdoorUser::getId)
+                .orElse(null);
     }
 
     public static String getCurrentAvatar() {
-        return getCurrentUser().getAvatar();
+        CasdoorUser user = getCurrentUser();
+        return Optional.ofNullable(user)
+                .map(CasdoorUser::getAvatar)
+                .orElse(null);
     }
 
     public static String getCurrentName() {
-        return getCurrentUser().getName();
+        CasdoorUser user = getCurrentUser();
+        return Optional.ofNullable(user)
+                .map(CasdoorUser::getName)
+                .orElse(null);
     }
 
 }

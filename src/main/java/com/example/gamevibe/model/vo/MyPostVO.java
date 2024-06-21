@@ -58,6 +58,12 @@ public class MyPostVO implements Serializable {
     protected String images;
 
     /**
+     * 帖子类型
+     */
+    @ApiModelProperty(value = "帖子类型", example = "宝可梦系列")
+    protected String type;
+
+    /**
      * 帖子评论数
      */
     @ApiModelProperty(value = "帖子评论数", example = "12")

@@ -15,12 +15,15 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface PostCollectMapper extends BaseMapper<PostCollect> {
 
-    @Select("SELECT p.id, u.user_id, u.nick_name, u.avatar, p.post_time, p.type, p.title, p.content, p.images, p.comments, pl.like_count, pc.collect_count, pl.is_like, 1 AS is_collect " +
-            "FROM (SELECT post_id FROM post_collect WHERE user_id = #{user_id} AND state = 1) pcu " +
-            "LEFT JOIN post p ON pcu.post_id = p.id AND p.is_delete = 0 " +
-            "LEFT JOIN (SELECT post_id, COUNT(*) as like_count, SUM(IF(user_id = #{user_id} AND state = 1, 1, 0)) as is_like FROM post_like WHERE state = 1 GROUP BY post_id) pl ON p.id = pl.post_id " +
-            "LEFT JOIN (SELECT post_id, COUNT(*) as collect_count FROM post_collect WHERE state = 1 GROUP BY post_id) pc ON p.id = pc.post_id  " +
-            "LEFT JOIN user u ON p.user_id = u.id ")
+    @Select("SELECT p.id, u.user_id, u.nick_name, u.avatar, p.post_time, p.type, p.title, p.content, p.images, p.comments, " +
+                "p.likes AS like_count, p.favours AS collect_count, 1 AS is_collect, " +
+                "IF(pl.id IS NULL, 0, 1) AS is_like " +
+            "FROM post_collect pc " +
+            "LEFT JOIN post p ON pc.post_id = p.id AND p.is_delete = 0 " +
+            "LEFT JOIN `user` u ON p.user_id = u.user_id AND u.is_delete = 0 " +
+            "LEFT JOIN post_like pl on pc.post_id = pl.post_id AND pc.user_id = pl.user_id AND pl.state = 1 " +
+            "WHERE pc.user_id = #{user_id} AND pc.state = 1 " +
+            "ORDER BY pc.update_time DESC ")
     Page<MyPostCollectVO> getCollectPostVOPage(String user_id, Page<?> page);
 
     @Insert("INSERT INTO post_collect (user_id, post_id) VALUES (#{user_id}, #{post_id}) ON DUPLICATE KEY UPDATE state = 1")
@@ -31,5 +34,8 @@ public interface PostCollectMapper extends BaseMapper<PostCollect> {
 
     @Select("SELECT COUNT(*) FROM post_collect WHERE user_id = #{user_id} AND post_id = #{post_id} AND state = 1 ")
     int isCollect(String user_id, Long post_id);
+
+    @Update("UPDATE post SET favours = favours + #{num} WHERE id = #{post_id} ")
+    void updateFavours(Long post_id, Integer num);
 
 }

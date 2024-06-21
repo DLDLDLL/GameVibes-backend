@@ -21,15 +21,14 @@ public class GameController {
     private GameService gameService;
 
     @ApiOperation(value = "获取游戏排行榜", notes = "pageRequest默认为(current: 1, pageSize: 10)")
-    @ApiImplicitParam(name = "pageRequest", value = "分页参数", paramType = "body")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
-    public BaseResponse<PageVO<GameRankVO>> listGameVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
-        return ResultUtils.success(gameService.getGameVOPage(pageRequest));
+    public BaseResponse<PageVO<GameRankVO>> listGameRankVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
+        return ResultUtils.success(gameService.getGameRankVOPage(pageRequest));
     }
 
     @ApiOperation(value = "获取游戏详情页")
-    @ApiImplicitParam(name = "game_id", value = "游戏id", paramType = "query")
+    @ApiImplicitParam(name = "game_id", value = "游戏id", required = true, paramType = "query")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/details")
     public BaseResponse<GameDetailsVO> getGameDetails(@RequestParam Long game_id) {

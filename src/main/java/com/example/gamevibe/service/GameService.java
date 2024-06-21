@@ -14,7 +14,7 @@ import com.example.gamevibe.model.vo.PageVO;
  */
 public interface GameService extends IService<Game> {
 
-    PageVO<GameRankVO> getGameVOPage(PageRequest pageRequest);
+    PageVO<GameRankVO> getGameRankVOPage(PageRequest pageRequest);
 
     GameDetailsVO getGameDetailsVO(Long game_id);
 }

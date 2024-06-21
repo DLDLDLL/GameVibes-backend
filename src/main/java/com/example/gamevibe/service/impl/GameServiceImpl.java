@@ -26,11 +26,11 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
     private GameMapper gameMapper;
 
     @Override
-    public PageVO<GameRankVO> getGameVOPage(PageRequest pageRequest) {
+    public PageVO<GameRankVO> getGameRankVOPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
-        Page<GameRankVO> gameVOPage = gameMapper.getGameVOPage(new Page<>(current, size));
-        return new PageVO<GameRankVO>().objToVO(gameVOPage);
+        Page<GameRankVO> gameRankVOPage = gameMapper.getGameRankVOPage(new Page<>(current, size));
+        return new PageVO<GameRankVO>().objToVO(gameRankVOPage);
     }
 
     @Override

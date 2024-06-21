@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 
@@ -24,7 +23,9 @@ public class GameMark implements Serializable {
 
     private Long game_id;
 
-    private BigDecimal score;
+    private String image;
+
+    private Integer score;
 
     private String comment;
 

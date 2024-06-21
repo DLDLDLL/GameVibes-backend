@@ -29,4 +29,11 @@ public class GameDetailsVO implements Serializable {
     @ApiModelProperty(value = "是否评分", example = "0", notes = "0为未评分, 1为已评分")
     private Integer is_mark;
 
+
+    public void processImages() {
+        String images = this.getImages();
+        String url = images.replaceAll("\\[|\\]|\"", "");
+        this.setImages(url);
+    }
+
 }
