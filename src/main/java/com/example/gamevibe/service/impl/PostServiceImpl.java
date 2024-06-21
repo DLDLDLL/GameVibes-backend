@@ -1,8 +1,10 @@
 package com.example.gamevibe.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.dto.PostAddRequest;
 import com.example.gamevibe.model.dto.PostEsDTO;
@@ -12,12 +14,14 @@ import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.service.PostService;
 import com.example.gamevibe.mapper.PostMapper;
 import lombok.extern.slf4j.Slf4j;
+import nonapi.io.github.classgraph.json.JSONUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -67,7 +71,6 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         }
         post.setPv(post.getPv() + 1);
         updateById(post);
-        // TODO 展示评论，查询点赞，查询收藏
         return post;
     }
 
@@ -116,7 +119,16 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
 
     @Override
     public Long addPost(PostAddRequest postAddRequest) {
-        return null;
+        Post post = new Post();
+        BeanUtils.copyProperties(postAddRequest, post);
+        List<String> images = postAddRequest.getImages();
+        post.setUser_id(BaseContext.getCurrentId());
+        post.setImages(JSONUtil.toJsonStr(images));
+        boolean save = save(post);
+        if (!save) {
+            log.error("保存帖子失败!");
+        }
+        return post.getId();
     }
 
 }

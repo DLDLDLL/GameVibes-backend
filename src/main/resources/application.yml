@@ -18,6 +18,11 @@ spring:
     uris: http://localhost:9200
     username: elastic
     password: 123456
+  # 文件上传
+  servlet:
+    multipart:
+      # 大小限制
+      max-file-size: 10MB
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -70,3 +75,5 @@ casdoor:
   organization-name: built-in
   application-name: app-built-in
   redirect-url: http://localhost:8080/api/signin
+gamevibe:
+  path: /www/wwwroot/images

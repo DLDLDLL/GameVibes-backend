@@ -3,6 +3,7 @@ package com.example.gamevibe.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.model.dto.PostCommentAddRequest;
 import com.example.gamevibe.model.dto.PostCommentQueryRequest;
 import com.example.gamevibe.model.entity.PostComment;
@@ -10,6 +11,7 @@ import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.service.PostCommentService;
 import com.example.gamevibe.mapper.PostCommentMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,10 +46,20 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
         return pageResult;
     }
 
-    // TODO
     @Override
-    public Long comment(PostCommentAddRequest id) {
-        return null;
+    public Long comment(PostCommentAddRequest postCommentAddRequest) {
+        PostComment postComment = new PostComment();
+        BeanUtils.copyProperties(postCommentAddRequest,postComment);
+
+        String user_id = BaseContext.getCurrentId();
+        postComment.setUser_id(user_id);
+
+        boolean save = save(postComment);
+        if(!save){
+            log.error("发布帖子失败");
+            return null;
+        }
+        return postComment.getPost_id();
     }
 }
 
