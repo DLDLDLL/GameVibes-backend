@@ -1,0 +1,141 @@
+[1mdiff --git a/src/main/java/com/example/gamevibe/controller/FileController.java b/src/main/java/com/example/gamevibe/controller/FileController.java[m
+[1mindex 5df709c..f468241 100644[m
+[1m--- a/src/main/java/com/example/gamevibe/controller/FileController.java[m
+[1m+++ b/src/main/java/com/example/gamevibe/controller/FileController.java[m
+[36m@@ -5,6 +5,7 @@[m [mimport com.example.gamevibe.common.ErrorCode;[m
+ import com.example.gamevibe.common.ResultUtils;[m
+ import com.example.gamevibe.model.vo.FileVO;[m
+ import io.swagger.annotations.Api;[m
+[32m+[m[32mimport io.swagger.annotations.ApiOperation;[m
+ import org.apache.commons.lang3.RandomStringUtils;[m
+ import org.springframework.beans.factory.annotation.Value;[m
+ import org.springframework.web.bind.annotation.PostMapping;[m
+[36m@@ -34,6 +35,7 @@[m [mpublic class FileController {[m
+      * @param request[m
+      * @return[m
+      */[m
+[32m+[m[32m    @ApiOperation(value = "批量上传图片")[m
+     @PostMapping("/upload")[m
+     public BaseResponse<FileVO> uploadFile(@RequestPart("files") List<MultipartFile> multipartFiles, HttpServletRequest request) throws IOException {[m
+         List<String> filePaths = new ArrayList<>();[m
+[1mdiff --git a/src/main/java/com/example/gamevibe/controller/PostCommentController.java b/src/main/java/com/example/gamevibe/controller/PostCommentController.java[m
+[1mindex b1ce4ce..2432c16 100644[m
+[1m--- a/src/main/java/com/example/gamevibe/controller/PostCommentController.java[m
+[1m+++ b/src/main/java/com/example/gamevibe/controller/PostCommentController.java[m
+[36m@@ -5,6 +5,7 @@[m [mimport com.example.gamevibe.common.ResultUtils;[m
+ import com.example.gamevibe.model.dto.PostAddRequest;[m
+ import com.example.gamevibe.model.dto.PostCommentAddRequest;[m
+ import com.example.gamevibe.model.dto.PostCommentQueryRequest;[m
+[32m+[m[32mimport com.example.gamevibe.model.entity.PostComment;[m
+ import com.example.gamevibe.model.vo.PageResult;[m
+ import com.example.gamevibe.service.PostCommentService;[m
+ import io.swagger.annotations.Api;[m
+[36m@@ -32,7 +33,7 @@[m [mpublic class PostCommentController {[m
+      */[m
+     @ApiOperation(value = "获取帖子评论")[m
+     @PostMapping("/list")[m
+[31m-    public BaseResponse<PageResult> listCommentsVOByPage(@RequestBody PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {[m
+[32m+[m[32m    public BaseResponse<PageResult<PostComment>> listCommentsVOByPage(@RequestBody PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {[m
+         return ResultUtils.success(postCommentService.listCommentsByPage(postCommentQueryRequest, request));[m
+     }[m
+ [m
+[1mdiff --git a/src/main/java/com/example/gamevibe/controller/PostController.java b/src/main/java/com/example/gamevibe/controller/PostController.java[m
+[1mindex c191f9b..2def45d 100644[m
+[1m--- a/src/main/java/com/example/gamevibe/controller/PostController.java[m
+[1m+++ b/src/main/java/com/example/gamevibe/controller/PostController.java[m
+[36m@@ -1,21 +1,18 @@[m
+ package com.example.gamevibe.controller;[m
+ [m
+[31m-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;[m
+ import com.example.gamevibe.common.BaseResponse;[m
+ import com.example.gamevibe.common.ErrorCode;[m
+ import com.example.gamevibe.common.ResultUtils;[m
+ import com.example.gamevibe.model.dto.PageRequest;[m
+ import com.example.gamevibe.model.dto.PostAddRequest;[m
+ import com.example.gamevibe.model.dto.PostQueryRequest;[m
+[31m-import com.example.gamevibe.model.entity.Post;[m
+ import com.example.gamevibe.model.vo.PageResult;[m
+[32m+[m[32mimport com.example.gamevibe.model.vo.PostVO;[m
+ import com.example.gamevibe.service.PostService;[m
+ import io.swagger.annotations.Api;[m
+[31m-import io.swagger.annotations.ApiModelProperty;[m
+ import io.swagger.annotations.ApiOperation;[m
+ import lombok.extern.slf4j.Slf4j;[m
+ import org.springframework.web.bind.annotation.*;[m
+[31m-import com.example.gamevibe.model.vo.PostVO;[m
+ import org.springframework.web.bind.annotation.PostMapping;[m
+ import org.springframework.web.bind.annotation.RequestBody;[m
+ import org.springframework.web.bind.annotation.RequestMapping;[m
+[36m@@ -42,8 +39,8 @@[m [mpublic class PostController {[m
+      */[m
+     @ApiOperation(value = "获取首页推荐列表")[m
+     @PostMapping("/list/recommend")[m
+[31m-    public BaseResponse<Page<Post>> listPostVOByPage(@RequestBody PageRequest pageRequest,[m
+[31m-                                                     HttpServletRequest request) {[m
+[32m+[m[32m    public BaseResponse<PageResult<PostVO>> listPostVOByPage(@RequestBody PageRequest pageRequest,[m
+[32m+[m[32m                                                       HttpServletRequest request) {[m
+         return ResultUtils.success(postService.getPostPage(pageRequest));[m
+     }[m
+ [m
+[36m@@ -56,7 +53,7 @@[m [mpublic class PostController {[m
+      */[m
+     @ApiOperation(value = "获取首页热门列表")[m
+     @PostMapping("/list/hot")[m
+[31m-    public BaseResponse<Page<Post>> listPostVOHotByPage(@RequestBody PageRequest pageRequest,[m
+[32m+[m[32m    public BaseResponse<PageResult<PostVO>> listPostVOHotByPage(@RequestBody PageRequest pageRequest,[m
+                                                    HttpServletRequest request) {[m
+         return ResultUtils.success(postService.getPostPage(pageRequest));[m
+     }[m
+[36m@@ -69,7 +66,7 @@[m [mpublic class PostController {[m
+      */[m
+     @ApiOperation(value = "查询帖子")[m
+     @GetMapping("/get")[m
+[31m-    public BaseResponse<Post> getPostVOById(@RequestParam long id, HttpServletRequest request) {[m
+[32m+[m[32m    public BaseResponse<PostVO> getPostVOById(@RequestParam long id, HttpServletRequest request) {[m
+         return ResultUtils.success(postService.getPostById(id, request));[m
+     }[m
+ [m
+[36m@@ -82,9 +79,9 @@[m [mpublic class PostController {[m
+      */[m
+     @ApiOperation(value = "搜索帖子")[m
+     @PostMapping("/search")[m
+[31m-    public BaseResponse<PageResult> searchPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,[m
+[32m+[m[32m    public BaseResponse<PageResult<PostVO>> searchPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,[m
+                                                        HttpServletRequest request) {[m
+[31m-        PageResult pageResult=new PageResult();[m
+[32m+[m[32m        PageResult<PostVO> pageResult=new PageResult<>();[m
+         try{[m
+             pageResult = postService.searchFromEs(postQueryRequest);[m
+         }catch (IOException e){[m
+[1mdiff --git a/src/main/java/com/example/gamevibe/model/vo/PageResult.java b/src/main/java/com/example/gamevibe/model/vo/PageResult.java[m
+[1mindex 65a4789..1ad7aed 100644[m
+[1m--- a/src/main/java/com/example/gamevibe/model/vo/PageResult.java[m
+[1m+++ b/src/main/java/com/example/gamevibe/model/vo/PageResult.java[m
+[36m@@ -6,8 +6,8 @@[m [mimport java.io.Serializable;[m
+ import java.util.List;[m
+ [m
+ @Data[m
+[31m-public class PageResult implements Serializable {[m
+[32m+[m[32mpublic class PageResult<T> implements Serializable {[m
+     private long total;[m
+ [m
+[31m-    private List records;[m
+[32m+[m[32m    private List<T> records;[m
+ }[m
+[1mdiff --git a/src/main/java/com/example/gamevibe/model/vo/PostVO.java b/src/main/java/com/example/gamevibe/model/vo/PostVO.java[m
+[1mindex 38ac7fd..e89d272 100644[m
+[1m--- a/src/main/java/com/example/gamevibe/model/vo/PostVO.java[m
+[1m+++ b/src/main/java/com/example/gamevibe/model/vo/PostVO.java[m
+[36m@@ -1,11 +1,16 @@[m
+ package com.example.gamevibe.model.vo;[m
+ [m
+[32m+[m[32mimport cn.hutool.json.JSONUtil;[m
+[32m+[m[32mimport com.baomidou.mybatisplus.annotation.IdType;[m
+[32m+[m[32mimport com.baomidou.mybatisplus.annotation.TableId;[m
+ import com.example.gamevibe.model.entity.Post;[m
+[32m+[m[32mimport com.fasterxml.jackson.annotation.JsonFormat;[m
+ import lombok.Data;[m
+ import org.springframework.beans.BeanUtils;[m
+ [m
+ import java.io.Serializable;[m
+ import java

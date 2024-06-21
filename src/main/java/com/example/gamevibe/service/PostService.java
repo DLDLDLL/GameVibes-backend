@@ -7,6 +7,7 @@ import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.model.vo.PageResult;
+import com.example.gamevibe.model.vo.PostVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -19,11 +20,11 @@ import java.io.IOException;
 public interface PostService extends IService<Post> {
 
 
-    Page<Post> getPostPage(PageRequest pageRequest);
+    PageResult<PostVO> getPostPage(PageRequest pageRequest);
 
-    Post getPostById(long id, HttpServletRequest request);
+    PostVO getPostById(long id, HttpServletRequest request);
 
-    PageResult searchFromEs(PostQueryRequest postQueryRequest)throws IOException;
+    PageResult<PostVO> searchFromEs(PostQueryRequest postQueryRequest)throws IOException;
 
     Long addPost(PostAddRequest postAddRequest);
 }

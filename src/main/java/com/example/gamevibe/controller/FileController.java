@@ -5,6 +5,7 @@ import com.example.gamevibe.common.ErrorCode;
 import com.example.gamevibe.common.ResultUtils;
 import com.example.gamevibe.model.vo.FileVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ public class FileController {
      * @param request
      * @return
      */
+    @ApiOperation(value = "批量上传图片")
     @PostMapping("/upload")
     public BaseResponse<FileVO> uploadFile(@RequestPart("files") List<MultipartFile> multipartFiles, HttpServletRequest request) throws IOException {
         List<String> filePaths = new ArrayList<>();

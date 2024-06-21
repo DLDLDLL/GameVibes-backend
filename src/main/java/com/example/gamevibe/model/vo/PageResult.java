@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Data
-public class PageResult implements Serializable {
+public class PageResult<T> implements Serializable {
     private long total;
 
-    private List records;
+    private List<T> records;
 }

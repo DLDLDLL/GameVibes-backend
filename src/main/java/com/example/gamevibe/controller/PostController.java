@@ -42,7 +42,7 @@ public class PostController {
      */
     @ApiOperation(value = "获取首页推荐列表")
     @PostMapping("/list/recommend")
-    public BaseResponse<Page<Post>> listPostVOByPage(@RequestBody PageRequest pageRequest,
+    public BaseResponse<PageResult<PostVO>> listPostVOByPage(@RequestBody PageRequest pageRequest,
                                                      HttpServletRequest request) {
         return ResultUtils.success(postService.getPostPage(pageRequest));
     }
@@ -56,7 +56,7 @@ public class PostController {
      */
     @ApiOperation(value = "获取首页热门列表")
     @PostMapping("/list/hot")
-    public BaseResponse<Page<Post>> listPostVOHotByPage(@RequestBody PageRequest pageRequest,
+    public BaseResponse<PageResult<PostVO>> listPostVOHotByPage(@RequestBody PageRequest pageRequest,
                                                    HttpServletRequest request) {
         return ResultUtils.success(postService.getPostPage(pageRequest));
     }
@@ -69,7 +69,7 @@ public class PostController {
      */
     @ApiOperation(value = "查询帖子")
     @GetMapping("/get")
-    public BaseResponse<Post> getPostVOById(@RequestParam long id, HttpServletRequest request) {
+    public BaseResponse<PostVO> getPostVOById(@RequestParam long id, HttpServletRequest request) {
         return ResultUtils.success(postService.getPostById(id, request));
     }
 
