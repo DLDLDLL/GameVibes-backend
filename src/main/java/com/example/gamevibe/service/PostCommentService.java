@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface PostCommentService extends IService<PostComment> {
 
-    PageResult listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request);
+    PageResult<PostComment> listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request);
 
     Long comment(PostCommentAddRequest postCommentAddRequest);
 }

@@ -11,6 +11,7 @@ import com.example.gamevibe.model.dto.PostEsDTO;
 import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.model.vo.PageResult;
+import com.example.gamevibe.model.vo.PostVO;
 import com.example.gamevibe.service.PostService;
 import com.example.gamevibe.mapper.PostMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
     @Resource
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
-    public Page<Post> getPostPage(PageRequest pageRequest) {
+    public PageResult<PostVO> getPostPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         // 查询条件
@@ -58,12 +59,16 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         queryWrapper.eq("is_delete", 0);
         queryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals("ascend"), sortField);
 
+        Page<Post> page = page(new Page<>(current, size), queryWrapper);
+        PageResult<PostVO> pageResult = new PageResult<>();
+        pageResult.setTotal(page.getTotal());
+        pageResult.setRecords(page.getRecords().stream().map(PostVO::objToVo).collect(Collectors.toList()));
         // 查询
-        return page(new Page<>(current, size), queryWrapper);
+        return pageResult;
     }
 
     @Override
-    public Post getPostById(long id, HttpServletRequest request) {
+    public PostVO getPostById(long id, HttpServletRequest request) {
         // 阅读量+1
         Post post = getById(id);
         if (post == null) {
@@ -71,11 +76,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         }
         post.setPv(post.getPv() + 1);
         updateById(post);
-        return post;
+        return PostVO.objToVo(post);
     }
 
     @Override
-    public PageResult searchFromEs(PostQueryRequest postQueryRequest) throws IOException {
+    public PageResult<PostVO> searchFromEs(PostQueryRequest postQueryRequest) throws IOException {
         String searchText = postQueryRequest.getSearchText();
         // es 起始页为 0
         long current = postQueryRequest.getCurrent() - 1;
@@ -103,7 +108,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(boolQueryBuilder)
                 .withPageable(pageRequest).withSorts(sortBuilder).build();
         SearchHits<PostEsDTO> searchHits = elasticsearchRestTemplate.search(searchQuery, PostEsDTO.class);
-        PageResult page = new PageResult();
+        PageResult<PostVO> page = new PageResult<>();
         page.setTotal(searchHits.getTotalHits());
         List<Post> postList = new ArrayList<>();
         // 结果
@@ -113,7 +118,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
                     .collect(Collectors.toList());
             postList = listByIds(postIdList);
         }
-        page.setRecords(postList);
+        page.setRecords(postList.stream().map(PostVO::objToVo).collect(Collectors.toList()));
         return page;
     }
 

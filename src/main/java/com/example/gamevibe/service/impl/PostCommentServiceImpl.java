@@ -26,7 +26,7 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
         implements PostCommentService {
 
     @Override
-    public PageResult listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {
+    public PageResult<PostComment> listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {
         long postId = postCommentQueryRequest.getPost_id();
         int current = postCommentQueryRequest.getCurrent();
         int pageSize = postCommentQueryRequest.getPageSize();
@@ -40,7 +40,7 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
 
         // 执行分页并封装
         Page<PostComment> page = page(new Page<>(current, pageSize), queryWrapper);
-        PageResult pageResult = new PageResult();
+        PageResult<PostComment> pageResult = new PageResult<>();
         pageResult.setTotal(page.getTotal());
         pageResult.setRecords(page.getRecords());
         return pageResult;
