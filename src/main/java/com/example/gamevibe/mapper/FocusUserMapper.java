@@ -17,16 +17,17 @@ public interface FocusUserMapper extends BaseMapper<FocusUser> {
 
     @Select("SELECT u.user_id, u.nick_name, u.avatar, u.intro, 1 AS is_focus " +
             "FROM focus_user fu " +
-            "LEFT JOIN user u ON fu.focused_id = u.user_id " +
+            "INNER JOIN user u ON fu.focused_id = u.user_id AND u.is_delete = 0 " +
             "WHERE fu.user_id = #{user_id} AND fu.state = 1 " +
-            "ORDER BY u.update_time DESC ")
+            "ORDER BY fu.update_time DESC ")
     Page<FocusUserVO> getFocusUserVOPage(String user_id, Page<?> page);
 
-    @Select("SELECT u.user_id, u.nick_name, u.avatar, u.intro, IF(fu.user_id IS NULL, 1, 0) AS is_focus " +
+    @Select("SELECT u.user_id, u.nick_name, u.avatar, u.intro, IF(fu.user_id IS NULL, 0, 1) AS is_focus " +
             "FROM focus_user fuo " +
             "LEFT JOIN user u ON fuo.focused_id = u.user_id " +
             "LEFT JOIN focus_user fu ON fu.focused_id = u.user_id AND fu.user_id = #{user_id} " +
-            "WHERE fuo.user_id = #{query_user_id} AND fuo.state = 1 ")
+            "WHERE fuo.user_id = #{query_user_id} AND fuo.state = 1 " +
+            "ORDER BY fuo.update_time DESC ")
     Page<FocusUserVO> getFocusUserVOPage(String user_id, String query_user_id, Page<?> page);
 
     @Insert("INSERT INTO focus_user (user_id, focused_id) VALUES (#{user_id}, #{focused_id}) ON DUPLICATE KEY UPDATE state = 1")
@@ -34,6 +35,15 @@ public interface FocusUserMapper extends BaseMapper<FocusUser> {
 
     @Update("UPDATE focus_user SET state = 0 WHERE user_id = #{user_id} AND focused_id = #{focused_id}")
     void cancelFocus(String user_id, String focused_id);
+
+    @Update("UPDATE user SET focus_count = focus_count + #{num} WHERE user_id = #{user_id} ")
+    void updateFocusCount(String user_id, Integer num);
+
+    @Update("UPDATE user SET fans_count = fans_count + #{num} WHERE user_id = #{user_id} ")
+    void updateFansCount(String user_id, Integer num);
+
+    @Select("SELECT COUNT(*) FROM focus_user WHERE user_id = #{user_id} AND focused_id = #{focus_id} AND state = 1 ")
+    int isFocus(String user_id, String focus_id);
 
 }
 

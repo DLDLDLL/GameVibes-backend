@@ -1,9 +1,11 @@
 package com.example.gamevibe.service;
 
+import com.example.gamevibe.model.dto.GameMarkDTO;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.GameMark;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.vo.GameMarkVO;
+import com.example.gamevibe.model.vo.MyGameMarkVO;
 import com.example.gamevibe.model.vo.PageVO;
 
 /**
@@ -14,5 +16,9 @@ import com.example.gamevibe.model.vo.PageVO;
 public interface GameMarkService extends IService<GameMark> {
 
     PageVO<GameMarkVO> getGameMarkVOPage(PageRequest pageRequest, Long game_id);
+
+    void mark(GameMarkDTO gameMarkDTO);
+
+    PageVO<MyGameMarkVO> getMyGameMarkVOPage(PageRequest pageRequest);
 }
 

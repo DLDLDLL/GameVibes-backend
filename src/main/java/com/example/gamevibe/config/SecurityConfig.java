@@ -54,7 +54,11 @@ public class SecurityConfig {
         // set permissions on endpoints
         http.authorizeHttpRequests(authorize -> authorize
                 // Our public endpoints
-                .mvcMatchers("/api/redirect-url", "/api/signin").permitAll()
+                .mvcMatchers(
+                        "/api/game/details",
+                        "/api/game/list/page/vo",
+                        "/api/game_mark/list/page/vo"
+                ).permitAll()
                 // Our private endpoints
                 .mvcMatchers("/api/**").authenticated()
         );

@@ -22,10 +22,6 @@ public class FocusUserController {
     private FocusUserService focusUserService;
 
     @ApiOperation(value = "获取关注用户列表", notes = "pageRequest默认为(current: 1, pageSize: 10), query_user_id不传则为自己")
-    @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "pageRequest", value = "分页参数", paramType = "body"),
-            @ApiImplicitParam(name = "query_user_id", value = "要查询的用户id", paramType = "query")
-    })
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
     public BaseResponse<PageVO<FocusUserVO>> listFocusUserVOByPage(@RequestBody(required = false) PageRequest pageRequest, @RequestParam(required = false) String query_user_id) {

@@ -2,11 +2,12 @@ package com.example.gamevibe.controller;
 
 import com.example.gamevibe.common.BaseResponse;
 import com.example.gamevibe.common.ResultUtils;
+import com.example.gamevibe.model.dto.PageRequest;
+import com.example.gamevibe.model.vo.MyPostVO;
+import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.model.vo.UserVO;
 import com.example.gamevibe.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.*;
 import org.casbin.casdoor.service.CasdoorAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final CasdoorAuthService casdoorAuthService;
+
     private final String redirectUrl;
 
     @Resource
@@ -41,12 +43,24 @@ public class UserController {
         return ResultUtils.success(userService.getUserInfo());
     }
 
-    @ApiOperation(value = "注册")
+    @ApiOperation(value = "更新用户信息")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "avatar", value = "头像", paramType = "query"),
+            @ApiImplicitParam(name = "nick_name", value = "昵称", paramType = "query")
+    })
     @ApiResponse(code = 0, message = "ok")
-    @PostMapping("/register")
-    public BaseResponse<String> register(@RequestParam String avatar) {
-        userService.register(avatar);
+    @PostMapping("/save")
+    public BaseResponse<String> save(@RequestParam(required = false) String avatar, @RequestParam(required = false) String nick_name) {
+        userService.save(avatar, nick_name);
         return ResultUtils.success();
+    }
+
+    @ApiOperation(value = "我的帖子")
+    @ApiResponse(code = 0, message = "ok")
+    @GetMapping("/list/page/vo")
+    public BaseResponse<PageVO<MyPostVO>> listMyPostVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
+        return ResultUtils.success(userService.getMyPostVOPage(pageRequest));
+
     }
 
 

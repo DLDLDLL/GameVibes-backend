@@ -7,6 +7,7 @@ import com.example.gamevibe.model.vo.GameDetailsVO;
 import com.example.gamevibe.model.vo.GameRankVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @author ZML
@@ -17,14 +18,24 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface GameMapper extends BaseMapper<Game> {
 
-    @Select("SELECT id, `name`, images, type, score FROM game WHERE is_delete = 0 ORDER BY score DESC ")
-    Page<GameRankVO> getGameVOPage(Page<?> page);
+    @Select("SELECT id, `name`, JSON_UNQUOTE(JSON_EXTRACT(images, '$[0]')) AS image, type, score " +
+            "FROM game " +
+            "WHERE is_delete = 0 " +
+            "ORDER BY score DESC ")
+    Page<GameRankVO> getGameRankVOPage(Page<?> page);
 
     @Select("SELECT g.id, g.name, g.images, g.intro, g.score, g.type, IF(gm.id IS NULL, 0, 1) AS is_mark " +
             "FROM game g " +
             "LEFT JOIN game_mark gm on g.id = gm.game_id AND gm.user_id = #{user_id} AND gm.is_delete = 0 " +
             "WHERE g.id = #{game_id} AND g.is_delete = 0")
     GameDetailsVO getGameDetailsVO(Long game_id, String user_id);
+
+    @Update("UPDATE game g SET g.score = (" +
+            "SELECT ROUND(2.0 * SUM(score) / COUNT(*), 1) " +
+            "FROM game_mark gm " +
+            "WHERE gm.game_id = #{game_id} AND gm.is_delete = 0) " +
+            "WHERE g.id = #{game_id} ")
+    void updateScoreById(Long game_id);
 
 
 }

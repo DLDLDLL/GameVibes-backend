@@ -22,8 +22,7 @@ public class PostCollectController {
     @Resource
     private PostCollectService postCollectService;
 
-    @ApiOperation(value = "获取帖子收藏列表", notes = "pageRequest默认为(current: 1, pageSize: 10)")
-    @ApiImplicitParam(name = "pageRequest", value = "分页参数", paramType = "body")
+    @ApiOperation(value = "我的收藏", notes = "pageRequest默认为(current: 1, pageSize: 10)")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
     public BaseResponse<PageVO<MyPostCollectVO>> listPostCollectVOByPage(@RequestBody(required = false) PageRequest pageRequest) {

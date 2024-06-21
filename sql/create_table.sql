@@ -67,9 +67,11 @@ CREATE TABLE user
     user_id     varchar(255)     PRIMARY KEY                           COMMENT '用户id',
     id          bigint           UNIQUE AUTO_INCREMENT                 COMMENT '个人主页id',
     intro       varchar(32)      DEFAULT '专属于你的gamevibe!' NOT NULL  COMMENT '用户简介',
-    avatar      varchar(255)                               NOT NULL   COMMENT '用户头像',
+    avatar      varchar(255)     DEFAULT 'https://cdn.casbin.org/img/casbin.svg' NOT NULL   COMMENT '用户头像',
     nick_name   varchar(16)      DEFAULT '手机用户'          NOT NULL   COMMENT '用户昵称',
     ip_addr     varchar(128)     DEFAULT '未知'             NOT NULL    COMMENT 'ip地址',
+    focus_count int(10)          DEFAULT 0                 NOT NULL    COMMENT '关注数量',
+    fans_count  int(10)          DEFAULT 0                 NOT NULL    COMMENT '粉丝数量',
     create_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL    COMMENT '创建时间',
     update_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL    COMMENT '更新时间' ON UPDATE CURRENT_TIMESTAMP,
     is_delete   tinyint          DEFAULT 0                 NOT NULL    COMMENT '是否删除'
@@ -125,10 +127,10 @@ CREATE TABLE game
 (
     id          bigint AUTO_INCREMENT COMMENT 'id' PRIMARY KEY,
     `name`      varchar(255)                               NOT NULL COMMENT '游戏名称',
-    images      varchar(1024)                              NOT NULL COMMENT '游戏图片',
+    images      json                                       NOT NULL COMMENT '游戏图片',
     type        varchar(255)                               NOT NULL COMMENT '游戏类型',
     score       decimal(3, 1)    DEFAULT 0.0               NOT NULL COMMENT '游戏评分',
-    intro       varchar(512)                               NOT NULL COMMENT '游戏简介',
+    intro       varchar(512)     DEFAULT '该游戏暂未提供简介' NOT NULL COMMENT '游戏简介',
     create_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
     update_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间' ON UPDATE CURRENT_TIMESTAMP,
     is_delete   tinyint          DEFAULT 0                 NOT NULL COMMENT '是否删除'
@@ -139,8 +141,11 @@ CREATE TABLE game_mark
 (
     id          bigint AUTO_INCREMENT COMMENT 'id' PRIMARY KEY,
     user_id     varchar(255)                               NOT NULL COMMENT '用户id',
+    user_name   varchar(255)                               NOT NULL COMMENT '用户昵称',
+    user_avatar varchar(255)                               NOT NULL COMMENT '用户头像',
     game_id     bigint                                     NOT NULL COMMENT '游戏id',
-    score       decimal(3, 1)                              NOT NULL COMMENT '评分',
+    image       varchar(255)                               NOT NULL COMMENT '游戏图片',
+    score       int(1)                                     NOT NULL COMMENT '评分',
     `comment`   varchar(128)                               NOT NULL COMMENT '评价',
     create_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
     update_time datetime         DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间' ON UPDATE CURRENT_TIMESTAMP,

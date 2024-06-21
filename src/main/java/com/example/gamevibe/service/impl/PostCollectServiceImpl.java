@@ -25,6 +25,7 @@ public class PostCollectServiceImpl extends ServiceImpl<PostCollectMapper, PostC
     @Autowired
     private PostCollectMapper postCollectMapper;
 
+
     @Override
     public PageVO<MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
@@ -39,13 +40,18 @@ public class PostCollectServiceImpl extends ServiceImpl<PostCollectMapper, PostC
     @Override
     public void collect(Long post_id) {
         String user_id = BaseContext.getCurrentId();
+        if (isCollect(post_id)) return;
         postCollectMapper.saveCollect(user_id, post_id);
+        postCollectMapper.updateFavours(post_id, 1);
     }
 
     @Override
     public void unCollect(Long post_id) {
         String user_id = BaseContext.getCurrentId();
-        postCollectMapper.cancelCollect(user_id, post_id);
+        if (isCollect(post_id)) {
+            postCollectMapper.cancelCollect(user_id, post_id);
+            postCollectMapper.updateFavours(post_id, -1);
+        }
     }
 
     @Override
