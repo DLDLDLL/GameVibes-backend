@@ -9,12 +9,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
- * 帖子评论表
- * @TableName post_comment
+ * 评论消息表
+ * @TableName comment_message
  */
-@TableName(value ="post_comment")
+@TableName(value ="comment_message")
 @Data
-public class PostComment implements Serializable {
+public class CommentMessage implements Serializable {
     /**
      * id
      */
@@ -22,40 +22,19 @@ public class PostComment implements Serializable {
     private Long id;
 
     /**
-     * 用户id
+     * 被评论用户id
      */
     private String user_id;
 
     /**
-     * 帖子id
+     * 帖子评论id
      */
-    private Long post_id;
+    private Long post_comment_id;
 
     /**
-     * 评论内容
+     * 0->未读，1->已读
      */
-    private String content;
-
-    /**
-     * 评论数量
-     */
-    private Integer comments;
-
-    /**
-     * 点赞数量
-     */
-    private Integer likes;
-
-    /**
-     * 评论地点
-     */
-    private String location;
-
-    /**
-     * 评论发布时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date post_name;
+    private Integer status;
 
     /**
      * 创建时间
