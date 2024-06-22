@@ -9,6 +9,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author ZML
  * @description 针对表【Game(游戏表)】的数据库操作Mapper
@@ -36,6 +39,11 @@ public interface GameMapper extends BaseMapper<Game> {
             "WHERE gm.game_id = #{game_id} AND gm.is_delete = 0) " +
             "WHERE g.id = #{game_id} ")
     void updateScoreById(Long game_id);
+
+    @Select("SELECT * FROM game WHERE update_time >= #{minUpdateTime}")
+    List<Game> listGameWithDelete(Date minUpdateTime);
+
+    List<GameRankVO> pageByIds(List<Long> gameIdList);
 
 
 }

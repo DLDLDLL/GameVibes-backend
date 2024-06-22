@@ -29,6 +29,10 @@ public class ModifyOutputAspect {
     public void getGameDetails() {
     }
 
+    @Pointcut("execution(* com.example.gamevibe.service.GameService.searchFromEs(..))")
+    public void searchGame() {
+    }
+
     @Around("getUserInfo()")
     public Object fillUserInfo(ProceedingJoinPoint joinPoint) throws Throwable {
         this.saveUser();
@@ -52,5 +56,11 @@ public class ModifyOutputAspect {
         return gameDetailsVO;
     }
 
+//    @Around("searchGame()")
+//    public Object processSearchGame(ProceedingJoinPoint joinPoint) throws Throwable {
+//        Game game = (Game) joinPoint.proceed();
+//        game.processImages();
+//        return game;
+//    }
 
 }

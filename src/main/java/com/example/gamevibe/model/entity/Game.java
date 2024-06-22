@@ -38,4 +38,5 @@ public class Game implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
 }
