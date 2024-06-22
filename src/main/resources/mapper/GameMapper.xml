@@ -4,16 +4,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.gamevibe.mapper.GameMapper">
 
-<!--    <resultMap id="BaseResultMap" type="com.example.gamevibe.model.entity.Game">-->
-<!--        <id property="id" column="id" jdbcType="BIGINT"/>-->
-<!--        <result property="name" column="name" jdbcType="VARCHAR"/>-->
-<!--        <result property="images" column="images" jdbcType=""/>-->
-<!--        <result property="type" column="type" jdbcType="VARCHAR"/>-->
-<!--        <result property="score" column="score" jdbcType="DECIMAL"/>-->
-<!--        <result property="intro" column="intro" jdbcType="VARCHAR"/>-->
-<!--        <result property="create_time" column="create_time" jdbcType="TIMESTAMP"/>-->
-<!--        <result property="update_time" column="update_time" jdbcType="TIMESTAMP"/>-->
-<!--        <result property="is_delete" column="is_delete" jdbcType="TINYINT"/>-->
-<!--    </resultMap>-->
+    <select id="pageByIds" resultType="com.example.gamevibe.model.vo.GameRankVO">
+        SELECT id,`name`, JSON_UNQUOTE(JSON_EXTRACT(images, '$[0]')) AS image, type, score
+        FROM game
+        WHERE id IN
+        <foreach collection="gameIdList" separator="," open="(" item="item" close=")">
+            #{item}
+        </foreach>
+    </select>
 
 </mapper>
