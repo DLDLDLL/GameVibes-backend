@@ -42,6 +42,7 @@ public class GameController {
     }
 
     @ApiOperation(value = "搜素游戏")
+    @ApiResponse(code = 0, message = "ok")
     @GetMapping("/search")
     public BaseResponse<PageResult> searchGameVOByPage(@RequestBody GameQueryRequest gameQueryRequest) {
         PageResult result = new PageResult();
