@@ -6,14 +6,20 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.model.dto.PostCommentAddRequest;
 import com.example.gamevibe.model.dto.PostCommentQueryRequest;
+import com.example.gamevibe.model.entity.CommentMessage;
+import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.model.entity.PostComment;
 import com.example.gamevibe.model.vo.PageResult;
+import com.example.gamevibe.service.CommentMessageService;
 import com.example.gamevibe.service.PostCommentService;
 import com.example.gamevibe.mapper.PostCommentMapper;
+import com.example.gamevibe.service.PostService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,6 +30,11 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostComment>
         implements PostCommentService {
+
+    @Resource
+    CommentMessageService commentMessageService;
+    @Resource
+    PostService postService;
 
     @Override
     public PageResult<PostComment> listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {
@@ -47,19 +58,40 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
     }
 
     @Override
+    @Transactional
     public Long comment(PostCommentAddRequest postCommentAddRequest) {
         PostComment postComment = new PostComment();
-        BeanUtils.copyProperties(postCommentAddRequest,postComment);
+        BeanUtils.copyProperties(postCommentAddRequest, postComment);
 
         String user_id = BaseContext.getCurrentId();
         postComment.setUser_id(user_id);
 
-        boolean save = save(postComment);
-        if(!save){
-            log.error("发布帖子失败");
+        // 保存帖子评论
+        boolean saveComment = save(postComment);
+        if (!saveComment) {
+            log.error("发布帖子评论失败");
             return null;
         }
-        return postComment.getPost_id();
+
+        // 保存评论消息
+        Long postCommentId = postComment.getId();
+        CommentMessage commentMessage = new CommentMessage();
+        Long postId = postCommentAddRequest.getPost_id();
+        Post post = postService.getById(postId);
+        commentMessage.setUser_id(post.getUser_id());
+        commentMessage.setPost_comment_id(postCommentId);
+        boolean saveMessage = commentMessageService.save(commentMessage);
+        if (!saveMessage) {
+            log.error("保存帖子评论消息失败");
+            return null;
+        }
+//        MessageVO messageVO = new MessageVO();
+//        messageVO.setUser_id(user_id);
+//        messageVO.setPost_id(postId);
+//        messageVO.setPost_comment_id(postCommentId);
+//        // 推送评论消息
+//        SseServer.sendMessage(targetUserId, messageVO);
+        return postCommentId;
     }
 }
 
