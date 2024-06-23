@@ -25,8 +25,8 @@ public class SecurityConfig {
     private final String casdoorUrl;
 
     public SecurityConfig(JwtTokenFilter jwtTokenFilter,
-                                 @Value("${casdoor.redirect-url}") String redirectUrl,
-                                 @Value("${casdoor.endpoint}") String casdoorUrl) {
+                          @Value("${casdoor.redirect-url}") String redirectUrl,
+                          @Value("${casdoor.endpoint}") String casdoorUrl) {
         this.jwtTokenFilter = jwtTokenFilter;
         this.frontendUrl = parseOrigin(redirectUrl);
         this.casdoorUrl = parseOrigin(casdoorUrl);
@@ -61,7 +61,12 @@ public class SecurityConfig {
                         "/api/game_mark/list/page/vo"
                 ).permitAll()
                 // Our private endpoints
-                .mvcMatchers("/api/**").authenticated()
+                .mvcMatchers(
+                        "/api/**",
+                        "/post/add",
+                        "/post_comment/add",
+                        "/file/**"
+                ).authenticated()
         );
 
         // set unauthorized requests exception handler

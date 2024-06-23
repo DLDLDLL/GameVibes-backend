@@ -16,7 +16,7 @@ public class PostAddRequest implements Serializable {
     /**
      * 游戏类别
      */
-    private String type;
+    private Long type;
 
     /**
      * 图片
