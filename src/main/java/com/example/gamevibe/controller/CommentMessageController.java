@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @Api(tags = "消息评论模块")
 @RestController
-@RequestMapping("/commentMessage")
+@RequestMapping("/api/commentMessage")
 public class CommentMessageController {
     @Resource
     CommentMessageService commentMessageService;

@@ -37,16 +37,6 @@ public class PostComment implements Serializable {
     private String content;
 
     /**
-     * 评论数量
-     */
-    private Integer comments;
-
-    /**
-     * 点赞数量
-     */
-    private Integer likes;
-
-    /**
      * 评论地点
      */
     private String location;
