@@ -5,11 +5,10 @@ import com.example.gamevibe.common.BaseResponse;
 import com.example.gamevibe.common.ResultUtils;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.News;
-import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.service.NewsService;
-import com.example.gamevibe.service.PostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +33,7 @@ public class NewsController {
      */
     @ApiOperation(value = "获取资讯")
     @PostMapping("/list/page")
-    public BaseResponse<Page<News>> listNewsByPage(@RequestBody PageRequest pageRequest,
+    public BaseResponse<Page<News>> listNewsByPage(@RequestBody @Validated PageRequest pageRequest,
                                                      HttpServletRequest request) {
         return ResultUtils.success(newsService.getNewsPage(pageRequest));
     }

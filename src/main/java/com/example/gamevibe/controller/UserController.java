@@ -12,6 +12,7 @@ import org.casbin.casdoor.service.CasdoorAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -58,7 +59,7 @@ public class UserController {
     @ApiOperation(value = "我的帖子")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
-    public BaseResponse<PageVO<MyPostVO>> listMyPostVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
+    public BaseResponse<PageVO<MyPostVO>> listMyPostVOByPage(@RequestBody(required = false) @Validated PageRequest pageRequest) {
         return ResultUtils.success(userService.getMyPostVOPage(pageRequest));
 
     }

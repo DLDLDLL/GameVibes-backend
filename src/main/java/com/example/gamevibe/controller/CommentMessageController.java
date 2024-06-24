@@ -8,6 +8,7 @@ import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.service.CommentMessageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -30,7 +31,7 @@ public class CommentMessageController {
      */
     @ApiOperation(value = "查询评论消息")
     @PostMapping("/list/page")
-    public BaseResponse<PageResult<CommentMessageVO>> listCommentMessageByPage(@RequestBody PageRequest pageRequest, HttpServletRequest request) throws IOException {
+    public BaseResponse<PageResult<CommentMessageVO>> listCommentMessageByPage(@RequestBody @Validated PageRequest pageRequest, HttpServletRequest request) throws IOException {
         return ResultUtils.success(commentMessageService.listCommentMessage(pageRequest));
     }
 }
