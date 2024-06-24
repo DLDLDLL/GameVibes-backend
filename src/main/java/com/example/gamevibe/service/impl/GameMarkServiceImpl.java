@@ -12,8 +12,9 @@ import com.example.gamevibe.model.vo.GameMarkVO;
 import com.example.gamevibe.model.vo.MyGameMarkVO;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.GameMarkService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -24,10 +25,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameMarkServiceImpl extends ServiceImpl<GameMarkMapper, GameMark> implements GameMarkService {
 
-    @Autowired
+    @Resource
     private GameMarkMapper gameMarkMapper;
 
-    @Autowired
+    @Resource
     private GameMapper gameMapper;
 
     @Override

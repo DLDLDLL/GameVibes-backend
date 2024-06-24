@@ -15,13 +15,18 @@ import org.apache.ibatis.annotations.*;
 
 public interface PostCollectMapper extends BaseMapper<PostCollect> {
 
-    @Select("SELECT p.id, u.user_id, u.nick_name, u.avatar, p.post_time, p.type, p.title, p.content, p.images, p.comments, " +
-                "p.likes AS like_count, p.favours AS collect_count, 1 AS is_collect, " +
-                "IF(pl.id IS NULL, 0, 1) AS is_like " +
+//    @Select("SELECT p.id, u.user_id, u.nick_name, u.avatar, p.post_time, p.type, p.title, p.content, p.images, p.comments, " +
+//                "p.likes AS like_count, p.favours AS collect_count, 1 AS is_collect, " +
+//                "IF(pl.id IS NULL, 0, 1) AS is_like " +
+//            "FROM post_collect pc " +
+//            "LEFT JOIN post p ON pc.post_id = p.id AND p.is_delete = 0 " +
+//            "LEFT JOIN `user` u ON p.user_id = u.user_id AND u.is_delete = 0 " +
+//            "LEFT JOIN post_like pl on pc.post_id = pl.post_id AND pc.user_id = pl.user_id AND pl.state = 1 " +
+//            "WHERE pc.user_id = #{user_id} AND pc.state = 1 " +
+//            "ORDER BY pc.update_time DESC ")
+    @Select("SELECT p.id, p.post_time, p.type, p.title, p.content, p.images " +
             "FROM post_collect pc " +
             "LEFT JOIN post p ON pc.post_id = p.id AND p.is_delete = 0 " +
-            "LEFT JOIN `user` u ON p.user_id = u.user_id AND u.is_delete = 0 " +
-            "LEFT JOIN post_like pl on pc.post_id = pl.post_id AND pc.user_id = pl.user_id AND pl.state = 1 " +
             "WHERE pc.user_id = #{user_id} AND pc.state = 1 " +
             "ORDER BY pc.update_time DESC ")
     Page<MyPostCollectVO> getCollectPostVOPage(String user_id, Page<?> page);

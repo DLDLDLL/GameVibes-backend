@@ -1,5 +1,6 @@
 package com.example.gamevibe.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,18 +19,21 @@ public class MyPostVO implements Serializable {
     /**
      * 用户id
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "用户id", example = "43ef5ba2-5b0a-43bc-a83e-fe3b3340c4ac")
     protected String user_id;
 
     /**
      * 用户昵称
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "用户昵称", example = "手机用户")
     protected String nick_name;
 
     /**
      * 用户头像
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "用户头像", example = "https://cdn.casbin.org/img/casbin.svg")
     protected String avatar;
 
@@ -60,36 +64,42 @@ public class MyPostVO implements Serializable {
     /**
      * 帖子类型
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "帖子类型", example = "宝可梦系列")
     protected String type;
 
     /**
      * 帖子评论数
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "帖子评论数", example = "12")
-    protected int comments;
+    protected Integer comments;
 
     /**
      * 帖子点赞数
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "帖子点赞数", example = "34")
-    protected int like_count;
+    protected Integer like_count;
 
     /**
      * 是否点赞
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "是否点赞", notes = "0为未点赞，1为已点赞", example = "1")
-    protected int is_like;
+    protected Integer is_like;
 
     /**
      * 帖子收藏数
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "帖子收藏数", example = "13")
-    protected int collect_count;
+    protected Integer collect_count;
 
     /**
      * 是否收藏
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "是否收藏", notes = "0为未点赞，1为已点赞", example = "0")
-    protected int is_collect;
+    protected Integer is_collect;
 }

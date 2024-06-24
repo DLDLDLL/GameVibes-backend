@@ -33,7 +33,7 @@ public interface GameMarkMapper extends BaseMapper<GameMark> {
             "SELECT #{gm.user_id}, u.nick_name, u.avatar, #{gm.game_id}, #{gm.score}, #{gm.comment}, JSON_EXTRACT(g.images, '$[0]') " +
             "FROM user u " +
             "JOIN game g ON g.id = #{gm.game_id} " +
-            "WHERE EXISTS (SELECT 1 FROM game WHERE id = #{gm.game_id})")
+            "WHERE EXISTS (SELECT 1 FROM game WHERE id = #{gm.game_id}) AND u.user_id = #{gm.user_id} ")
     void mark(@Param(value = "gm") GameMarkDTO gameMarkDTO);
 
     @Select("SELECT gm.user_id, gm.user_avatar, gm.user_name, gm.create_time, gm.score, gm.comment, gm.game_id, " +
