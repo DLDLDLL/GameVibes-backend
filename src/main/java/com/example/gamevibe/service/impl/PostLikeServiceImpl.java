@@ -10,8 +10,9 @@ import com.example.gamevibe.model.vo.MyPostLikeVO;
 import com.example.gamevibe.model.entity.PostLike;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.PostLikeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -22,24 +23,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostLikeServiceImpl extends ServiceImpl<PostLikeMapper, PostLike> implements PostLikeService {
 
-    @Autowired
+    @Resource
     private PostLikeMapper postLikeMapper;
 
     @Override
-    public PageVO<MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest) {
+    public PageVO<MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest, String user_id) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
-        String user_id = BaseContext.getCurrentId();
-
         Page<MyPostLikeVO> likePostPage = postLikeMapper.getLikePostVOPage(user_id, new Page<>(current, size));
-
         return new PageVO<MyPostLikeVO>().objToVO(likePostPage);
     }
 
     @Override
     public void like(Long post_id) {
         String user_id = BaseContext.getCurrentId();
-        if (isLike(post_id)) return;
         postLikeMapper.saveLike(user_id, post_id);
         postLikeMapper.updateLikes(post_id, 1);
     }

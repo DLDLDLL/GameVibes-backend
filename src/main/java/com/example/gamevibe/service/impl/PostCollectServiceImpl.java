@@ -10,8 +10,9 @@ import com.example.gamevibe.model.vo.MyPostCollectVO;
 import com.example.gamevibe.model.entity.PostCollect;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.PostCollectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -22,25 +23,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostCollectServiceImpl extends ServiceImpl<PostCollectMapper, PostCollect> implements PostCollectService {
 
-    @Autowired
+    @Resource
     private PostCollectMapper postCollectMapper;
 
 
     @Override
-    public PageVO<MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest) {
+    public PageVO<MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest, String user_id) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
-        String user_id = BaseContext.getCurrentId();
-
         Page<MyPostCollectVO> collectPostPage = postCollectMapper.getCollectPostVOPage(user_id, new Page<>(current, size));
-
         return new PageVO<MyPostCollectVO>().objToVO(collectPostPage);
     }
 
     @Override
     public void collect(Long post_id) {
         String user_id = BaseContext.getCurrentId();
-        if (isCollect(post_id)) return;
         postCollectMapper.saveCollect(user_id, post_id);
         postCollectMapper.updateFavours(post_id, 1);
     }

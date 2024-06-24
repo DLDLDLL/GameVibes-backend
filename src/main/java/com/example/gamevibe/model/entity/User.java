@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+
 import lombok.Data;
 
 /**
@@ -23,9 +24,15 @@ public class User implements Serializable {
 
     private String nick_name;
 
+    private String avatar;
+
     private String intro;
 
     private String ip_addr;
+
+    private Integer focus_count;
+
+    private Integer fans_count;
 
     private Date create_time;
 

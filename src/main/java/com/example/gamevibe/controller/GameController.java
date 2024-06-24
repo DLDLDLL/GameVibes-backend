@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Slf4j
@@ -44,17 +45,18 @@ public class GameController {
     @ApiOperation(value = "搜素游戏")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/search")
-    public BaseResponse<PageResult> searchGameVOByPage(@RequestBody GameQueryRequest gameQueryRequest) {
-        PageResult result = new PageResult();
+    public BaseResponse<PageResult> searchGameVOByPage(@RequestBody GameQueryRequest gameQueryRequest, HttpServletRequest request) {
+        PageResult pageResult = new PageResult();
+        System.out.println(gameQueryRequest);
         try {
-            result = gameService.searchFromEs(gameQueryRequest);
+            pageResult = gameService.searchFromEs(gameQueryRequest);
         } catch (IOException e) {
             if (!(e.getMessage().contains("200 OK"))) {
                 log.error("搜索错误", e);
                 return ResultUtils.error(ErrorCode.SYSTEM_ERROR, "搜索错误");
             }
         }
-        return ResultUtils.success(result);
+        return ResultUtils.success(pageResult);
     }
 
 

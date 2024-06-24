@@ -36,7 +36,7 @@ public class FullSyncGameToEs implements CommandLineRunner {
             try {
                 gameEsDao.saveAll(gameEsDTOList.subList(i, end));
             } catch (Exception e) {
-                if (!(e.getMessage().equals("200 OK"))) {
+                if (!(e.getMessage().contains("200 OK"))) {
                     log.error("es 全量同步错误", e);
                     return;
                 }

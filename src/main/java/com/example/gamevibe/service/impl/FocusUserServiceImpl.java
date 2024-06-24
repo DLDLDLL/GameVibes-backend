@@ -11,8 +11,9 @@ import com.example.gamevibe.model.vo.FocusUserVO;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.FocusUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -24,35 +25,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class FocusUserServiceImpl extends ServiceImpl<FocusUserMapper, FocusUser> implements FocusUserService {
 
-    @Autowired
+    @Resource
     private FocusUserMapper focusUserMapper;
 
     @Override
-    public PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest) {
+    public PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String user_id) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
-        String user_id = BaseContext.getCurrentId();
-
         Page<FocusUserVO> focusUserPage = focusUserMapper.getFocusUserVOPage(user_id, new Page<>(current, size));
-
         return new PageVO<FocusUserVO>().objToVO(focusUserPage);
     }
 
     @Override
-    public PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String query_user_id) {
+    public PageVO<FocusUserVO> getFansVOPage(PageRequest pageRequest, String user_id) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
-        String user_id = BaseContext.getCurrentId();
-
-        Page<FocusUserVO> focusUserPage = focusUserMapper.getFocusUserVOPage(user_id, query_user_id, new Page<>(current, size));
-
+        Page<FocusUserVO> focusUserPage = focusUserMapper.getFansVOPage(user_id, new Page<>(current, size));
         return new PageVO<FocusUserVO>().objToVO(focusUserPage);
     }
 
     @Override
     public void focus(String focus_id) {
         String user_id = BaseContext.getCurrentId();
-        if (isFocus(focus_id)) return;
         focusUserMapper.saveFocus(user_id, focus_id);
         focusUserMapper.updateFocusCount(user_id, 1);
         focusUserMapper.updateFansCount(focus_id, 1);

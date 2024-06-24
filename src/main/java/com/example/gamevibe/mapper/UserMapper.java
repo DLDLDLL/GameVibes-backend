@@ -6,7 +6,6 @@ import com.example.gamevibe.model.vo.MyPostVO;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.gamevibe.model.vo.UserVO;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 /**
@@ -15,7 +14,7 @@ import org.apache.ibatis.annotations.Select;
 * @createDate 2024-06-11 21:18:53
 * @Entity .model.entity.User
 */
-@Mapper
+
 public interface UserMapper extends BaseMapper<User> {
 
     @Select("SELECT u.id, u.user_id, u.nick_name, u.avatar, u.create_time, u.ip_addr, u.intro, " +
