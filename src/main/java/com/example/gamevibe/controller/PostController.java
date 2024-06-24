@@ -82,9 +82,9 @@ public class PostController {
      */
     @ApiOperation(value = "搜索帖子")
     @PostMapping("/search")
-    public BaseResponse<PageResult> searchPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,
+    public BaseResponse<PageResult<PostVO>> searchPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,
                                                        HttpServletRequest request) {
-        PageResult pageResult=new PageResult();
+        PageResult<PostVO> pageResult=new PageResult<>();
         try{
             pageResult = postService.searchFromEs(postQueryRequest);
         }catch (IOException e){
