@@ -22,11 +22,11 @@ public class PostLikeController {
     @Resource
     private PostLikeService postLikeService;
 
-    @ApiOperation(value = "我的点赞", notes = "pageRequest默认为(current: 1, pageSize: 10)")
+    @ApiOperation(value = "点赞列表", notes = "pageRequest默认为(current: 1, pageSize: 10)")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/list/page/vo")
-    public BaseResponse<PageVO<MyPostLikeVO>> listPostLikeVOByPage(@RequestBody(required = false) PageRequest pageRequest) {
-        return ResultUtils.success(postLikeService.getLikePostVOPage(pageRequest));
+    public BaseResponse<PageVO<MyPostLikeVO>> listPostLikeVOByPage(@RequestBody(required = false) PageRequest pageRequest, @RequestParam(required = false) String user_id) {
+        return ResultUtils.success(postLikeService.getLikePostVOPage(pageRequest, user_id));
     }
 
     @ApiOperation(value = "点赞帖子")

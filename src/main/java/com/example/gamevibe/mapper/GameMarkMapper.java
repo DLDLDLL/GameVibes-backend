@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.gamevibe.model.vo.GameMarkVO;
 import com.example.gamevibe.model.vo.MyGameMarkVO;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,7 +17,7 @@ import org.apache.ibatis.annotations.Select;
  * @createDate 2024-06-19 16:17:55
  * @Entity com.example.gamevibe.model.entity.GameMark
  */
-@Mapper
+
 public interface GameMarkMapper extends BaseMapper<GameMark> {
 
     @Select("SELECT gm.user_id, gm.user_avatar, gm.user_name, gm.create_time, gm.score, gm.comment " +

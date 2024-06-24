@@ -13,7 +13,7 @@ import com.example.gamevibe.model.vo.PageVO;
  */
 public interface PostCollectService extends IService<PostCollect> {
 
-    PageVO<MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest);
+    PageVO<MyPostCollectVO> getCollectPostVOPage(PageRequest pageRequest, String user_id);
 
     void collect(Long post_id);
 

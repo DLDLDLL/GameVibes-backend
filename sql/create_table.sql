@@ -168,5 +168,51 @@ CREATE TABLE comment_message
     is_delete       tinyint  DEFAULT 0                 NOT NULL COMMENT '是否删除'
 ) comment '评论消息表' collate = utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS like_message;
+CREATE TABLE like_message
+(
+    id              bigint auto_increment comment 'id' PRIMARY KEY,
+    user_id         varchar(255)                       NOT NULL COMMENT '用户id',
+    user_name       varchar(16)                        NOT NULL COMMENT '用户名称',
+    user_avatar     varchar(255)                       NOT NULL COMMENT '用户头像',
+    post_id         bigint                             NOT NULL COMMENT '帖子id',
+    post_title      varchar(128)                       NOT NULL COMMENT '帖子标题',
+    post_user_id    varchar(255)                       NOT NULL COMMENT '帖子被点赞的用户id',
+    `status`        tinyint  DEFAULT 0                 NOT NULL COMMENT '0->未读，1->已读',
+    create_time     datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    update_time     datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间' ON UPDATE CURRENT_TIMESTAMP,
+    is_delete       tinyint  DEFAULT 0                 NOT NULL COMMENT '是否删除'
+) comment '点赞消息表' collate = utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS collect_message;
+CREATE TABLE collect_message
+(
+    id              bigint auto_increment comment 'id' PRIMARY KEY,
+    user_id         varchar(255)                       NOT NULL COMMENT '用户id',
+    user_name       varchar(16)                        NOT NULL COMMENT '用户名称',
+    user_avatar     varchar(255)                       NOT NULL COMMENT '用户头像',
+    post_id         bigint                             NOT NULL COMMENT '帖子id',
+    post_title      varchar(128)                       NOT NULL COMMENT '帖子标题',
+    post_user_id    varchar(255)                       NOT NULL COMMENT '帖子被收藏的用户id',
+    `status`        tinyint  DEFAULT 0                 NOT NULL COMMENT '0->未读，1->已读',
+    create_time     datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    update_time     datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间' ON UPDATE CURRENT_TIMESTAMP,
+    is_delete       tinyint  DEFAULT 0                 NOT NULL COMMENT '是否删除'
+) comment '收藏消息表' collate = utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS focus_user_message;
+CREATE TABLE focus_user_message
+(
+    id              bigint auto_increment comment 'id' PRIMARY KEY,
+    user_id         varchar(255)                       NOT NULL COMMENT '用户id',
+    user_name       varchar(16)                        NOT NULL COMMENT '用户名称',
+    user_avatar     varchar(255)                       NOT NULL COMMENT '用户头像',
+    focus_user_id   varchar(255)                       NOT NULL COMMENT '被关注用户id',
+    `status`        tinyint  DEFAULT 0                 NOT NULL COMMENT '0->未读，1->已读',
+    create_time     datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    update_time     datetime DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '更新时间' ON UPDATE CURRENT_TIMESTAMP,
+    is_delete       tinyint  DEFAULT 0                 NOT NULL COMMENT '是否删除'
+) comment '关注用户消息表' collate = utf8mb4_unicode_ci;
+
 
 

@@ -14,9 +14,9 @@ import com.example.gamevibe.model.vo.PageVO;
 */
 public interface FocusUserService extends IService<FocusUser> {
 
-    PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest);
+    PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String user_id);
 
-    PageVO<FocusUserVO> getFocusUserVOPage(PageRequest pageRequest, String query_user_id);
+    PageVO<FocusUserVO> getFansVOPage(PageRequest pageRequest, String user_id);
 
     void focus(String focus_id);
 

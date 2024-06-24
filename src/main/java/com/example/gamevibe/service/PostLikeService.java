@@ -14,7 +14,7 @@ import com.example.gamevibe.model.vo.PageVO;
  */
 public interface PostLikeService extends IService<PostLike> {
 
-    PageVO<MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest);
+    PageVO<MyPostLikeVO> getLikePostVOPage(PageRequest pageRequest, String user_id);
 
     void like(Long post_id);
 

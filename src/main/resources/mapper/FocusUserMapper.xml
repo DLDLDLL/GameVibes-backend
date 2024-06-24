@@ -13,8 +13,5 @@
             <result property="state" column="state" jdbcType="TINYINT"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        id,user_id,focused_id,
-        create_time,update_time,state
-    </sql>
+
 </mapper>

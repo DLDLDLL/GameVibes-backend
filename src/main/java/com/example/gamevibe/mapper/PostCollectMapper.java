@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.*;
  * @createDate 2024-06-11 21:18:53
  * @Entity .model.entity.PostCollect
  */
-@Mapper
+
 public interface PostCollectMapper extends BaseMapper<PostCollect> {
 
     @Select("SELECT p.id, u.user_id, u.nick_name, u.avatar, p.post_time, p.type, p.title, p.content, p.images, p.comments, " +

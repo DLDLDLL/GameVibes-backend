@@ -21,6 +21,8 @@ public class GameMark implements Serializable {
 
     private String user_id;
 
+    private String user_name;
+
     private Long game_id;
 
     private String image;

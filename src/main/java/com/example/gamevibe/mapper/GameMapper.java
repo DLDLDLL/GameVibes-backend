@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.gamevibe.model.vo.GameDetailsVO;
 import com.example.gamevibe.model.vo.GameRankVO;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -18,7 +17,7 @@ import java.util.List;
  * @createDate 2024-06-19 16:17:55
  * @Entity com.example.gamevibe.model.entity.Game
  */
-@Mapper
+
 public interface GameMapper extends BaseMapper<Game> {
 
     @Select("SELECT id, `name`, JSON_UNQUOTE(JSON_EXTRACT(images, '$[0]')) AS image, type, score " +

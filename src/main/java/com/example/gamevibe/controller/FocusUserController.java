@@ -2,7 +2,6 @@ package com.example.gamevibe.controller;
 
 import com.example.gamevibe.common.BaseResponse;
 import com.example.gamevibe.common.ResultUtils;
-import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.vo.FocusUserVO;
 import com.example.gamevibe.model.vo.PageVO;
@@ -11,7 +10,6 @@ import io.swagger.annotations.*;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Optional;
 
 @Api(tags = "关注用户模块")
 @RestController
@@ -21,16 +19,18 @@ public class FocusUserController {
     @Resource
     private FocusUserService focusUserService;
 
-    @ApiOperation(value = "获取关注用户列表", notes = "pageRequest默认为(current: 1, pageSize: 10), query_user_id不传则为自己")
+    @ApiOperation(value = "获取关注列表", notes = "pageRequest默认为(current: 1, pageSize: 10), user_id不传则为自己")
     @ApiResponse(code = 0, message = "ok")
-    @GetMapping("/list/page/vo")
-    public BaseResponse<PageVO<FocusUserVO>> listFocusUserVOByPage(@RequestBody(required = false) PageRequest pageRequest, @RequestParam(required = false) String query_user_id) {
-        return ResultUtils.success(
-                Optional.ofNullable(query_user_id)
-                        .filter(id -> !id.equals(BaseContext.getCurrentId()))
-                        .map(id -> focusUserService.getFocusUserVOPage(pageRequest, id))
-                        .orElseGet(() -> focusUserService.getFocusUserVOPage(pageRequest))
-        );
+    @GetMapping("/list/page/vo/focus")
+    public BaseResponse<PageVO<FocusUserVO>> listFocusUserVOByPage(@RequestBody(required = false) PageRequest pageRequest, @RequestParam(required = false) String user_id) {
+        return ResultUtils.success(focusUserService.getFocusUserVOPage(pageRequest, user_id));
+    }
+
+    @ApiOperation(value = "获取粉丝列表", notes = "pageRequest默认为(current: 1, pageSize: 10), user_id不传则为自己")
+    @ApiResponse(code = 0, message = "ok")
+    @GetMapping("/list/page/vo/fans")
+    public BaseResponse<PageVO<FocusUserVO>> listFansVOByPage(@RequestBody(required = false) PageRequest pageRequest, @RequestParam(required = false) String user_id) {
+        return ResultUtils.success(focusUserService.getFansVOPage(pageRequest, user_id));
     }
 
     @ApiOperation(value = "关注用户")

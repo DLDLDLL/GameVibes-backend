@@ -49,7 +49,7 @@ public class ResultUtils {
         return response;
     }
 
-    private static void writeResultToResponse(HttpServletResponse response, BaseResponse baseResponse) {
+    public static void writeResultToResponse(HttpServletResponse response, BaseResponse baseResponse) {
         try {
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setCharacterEncoding("UTF-8");
