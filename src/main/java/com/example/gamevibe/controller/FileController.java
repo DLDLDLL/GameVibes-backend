@@ -23,7 +23,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/file")
 public class FileController {
-    private String serverPath=getClass().getResource("/static").getPath()+"/";
+//    private String serverPath=getClass().getResource("/static").getPath()+"/";
+    @Value("${gamevibe.serverPath}")
+    private String serverPath;
     @Value("${gamevibe.databasePath}")
     private String databasePath;
 
