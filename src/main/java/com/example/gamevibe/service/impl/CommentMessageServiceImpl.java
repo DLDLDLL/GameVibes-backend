@@ -60,7 +60,7 @@ public class CommentMessageServiceImpl extends ServiceImpl<CommentMessageMapper,
         List<CommentMessageVO> commentMessageVOList = new ArrayList<>();
         for (CommentMessage commentMessage : commentMessageList) {
             CommentMessageVO commentMessageVO = new CommentMessageVO();
-            commentMessageVO.setCurrent_user_name("BaseContext.getCurrentName()");
+            commentMessageVO.setCurrent_user_name(BaseContext.getCurrentName());
             commentMessageVO.setStatus(commentMessage.getStatus());
             // 帖子评论
             Long postComment__id = commentMessage.getPost_comment_id();
