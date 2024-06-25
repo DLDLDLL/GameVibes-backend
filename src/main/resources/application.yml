@@ -42,42 +42,42 @@ knife4j:
     username: password
     password: username
 casdoor:
-  endpoint: http://localhost:8000
-  client-id: 1f20ed3e6ad105928baf
-  client-secret: 5a984039da5cf307fdb1dbc76321097561fe03d1
+  endpoint: http://auth.chiichen.cn
+  client-id: e605bd789a0836f22186
+  client-secret: af38675442a78ab96bdef566eb1757173ab23b69
   certificate: |-
     -----BEGIN CERTIFICATE-----
     MIIE3TCCAsWgAwIBAgIDAeJAMA0GCSqGSIb3DQEBCwUAMCgxDjAMBgNVBAoTBWFk
-    bWluMRYwFAYDVQQDEw1jZXJ0LWJ1aWx0LWluMB4XDTI0MDYwODE2MTUyMFoXDTQ0
-    MDYwODE2MTUyMFowKDEOMAwGA1UEChMFYWRtaW4xFjAUBgNVBAMTDWNlcnQtYnVp
-    bHQtaW4wggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDdYMYi1yUtKgps
-    YgNqrOZ1eEysTdcFrDzj5G1gWFoOBnYr/3ULg1n+4C5aoDkXVQrMqpDmJ9G4jkNu
-    COlwbds70fCNHoumxkxar1GDP0Q64bnBnuPKWS2aBNLdtsOmibVQ/Hli9eq+xzgT
-    u52bB7EfIUIp9wHBXhnMdcPB54wJGc2G6mAdMQLbWRmbf8y+FZDFWxx8SA1fOSZc
-    7TlHRc6oobk2j5w1rzdodtD8GPdy0nkMEsv466+NOM/WedTzS7ddfhy88o+GnFiP
-    r/uK0i8rfKYEFT+OaCnk6HEFGEu/vvhfi6ycUcL5V2BUWQJ26gyAHCY8qqCSLuhD
-    p7xE1/KoRZ4w1EpWL/P2Nw0JpcMHvwjREK8x//ToTPgbYY1XnK0bX/8AIF6mvm7y
-    CtJZb8Fdp9e93QVnfWwNrRUrlxKV0YpsbirtV9g7rmHrQzUIO9Uz50m0NqD06Phy
-    WB/2+xLHIN7j2ck0NWGeSzNA2MrVZYj4+fbiIJJaNKMIpOIPd/FyItfeomem6u/I
-    DfFHYIzaKy5c1N8LLGPRKI10aR6gw8n3CZeXjh+EBMBDyBuYQ2fkvjibBoj8GztS
-    L5BXtwUh9a2lQ+xUQXIsUPFDm+0smqz6xdPBEYXTRAk8eCFYM3cfcYXpcXoSC74E
-    bBdXKBLQKpl7LD5Yp3lVHTFAIefquwIDAQABoxAwDjAMBgNVHRMBAf8EAjAAMA0G
-    CSqGSIb3DQEBCwUAA4ICAQAQ8X+U4TKy85uDC4FxtbWC0gEx4/2aaGSVcWASPBQ9
-    tJXZdJ2gvlKQgwiz4cAA0Hg6UDEi7sezENnpixjn/KduIn4K5jXIEA9iMZfcr/8X
-    z4tO92FwyvotAzbzomBETxHGr+26fJybfzrZCLwkICobJ4NmuSXOSiSJaGgsirSR
-    IvBU86qJerEzPciVVrNi3IllMakIt3TRI+DrMTH3cX11EmjWivWgbuyaVxCPAu2n
-    nz5dMPHkMK1ikfD6QoTJMKxsvJ9sw9wGD8WxqTOQy++i6sDJPtWtPaYk3e8d0AKF
-    0rnUQ/VBxwNFkTLnHoecRUdxb2rlxzRbedoHDrIvccMi4V7Qa1j/jpyKen21O/vD
-    Cme5Y7ybO+J6vPTwuYxJ7tPisMb/RzYo2f3n7YBw8dNd1CFICZRpC2RHFEk6i9wt
-    2Sd1G4w0wChLJ1GVOpS1wVqt4Yvhg5yC+rE9k3Ml2b5tf6b4VS71kPy5+wXszXNB
-    X6ME69MZYSHygZbaBAFAU6ekoBJDU68l681xEyiKmuEhUql/F1YYigc5QlCtUfEU
-    S1D42kP9faNxM9GhEPj6juvYfSa4oo/BVoRtu4YFB5dhsfHCWwowiyTkSuEKF+1J
-    ItQqZxxcDhhwwnzL152f1t+bgPH6kE+csbP7SdGBWm7JTUbI2zYVE9YVjmmOYIiO
-    LQ==
+    bWluMRYwFAYDVQQDEw1jZXJ0LWJ1aWx0LWluMB4XDTI0MDUyNDEyMTA1MloXDTQ0
+    MDUyNDEyMTA1MlowKDEOMAwGA1UEChMFYWRtaW4xFjAUBgNVBAMTDWNlcnQtYnVp
+    bHQtaW4wggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDbbjKI13xjUP/+
+    pfZQoARtotNF6AeOTFXJ/8AdgkXErS82M8TAiLzNXimO7EUQrGo0cERlFlsjOwDU
+    xvdAyMQzIQYMEa4frzCqoD+GEtce+cNicHIQHzHQPUQIolL1qRCZpH96yjsIOwDr
+    0BLnGGXwZ10Hgx/bLpFudoBiyFFitJfVTeJd9s1MJV5QJS3tRgHea+9PeL4Y1pZn
+    Hu2HNwsZPfDPkR4p6ltUDCX+ctIPuhfxU6VAE1fcb1pviGHLi3jDcUb5sVzXmQNu
+    59+qZnPrmbo7A0qNen26L66F6q6cWwDclwY837vKxZ6B2NAZketMiSx7TTiQvkH+
+    5PKcpStvZydTqV9IG1cFi5eGAaW2lRj/ZMgQOaZZLhZ8I1bP8n+Cql4kbsX5p2gZ
+    Dr2mFhTldbo63U8l8GLPaMXbJlR+EZbLN2w+AClwBCkzUmxmBTvI8DaydRpIIX0C
+    T1CkdZqD0+E0x64nHUbbBHcSrm0XddLlXs/rD8reYJ/f8dsFVqZ6URhowejGbv6A
+    2yobYEVtdIsZPlJ0fgvlrhIUefHs+/+yYPE2YfcDik+VxDhsg576QsF3yvWR/ag1
+    aPqik5Ip7AKLfgEIbiyUrYyQ6nU/7WmGtz1wv6RnRJH6Mzk8uWQZxLSTexUFu5de
+    BD2xO+kay1VdC8n7O3LT67FjYNI/awIDAQABoxAwDjAMBgNVHRMBAf8EAjAAMA0G
+    CSqGSIb3DQEBCwUAA4ICAQBrjqkd5e4WqyeGVHGvD6d01edPDhMlCcR+T+xXgc9v
+    UNAwXQQ4n33Q3y34vKrju423Foo/4PKr7Ees1XgRuSZKsr0IRuf48Vesq/QQeAPU
+    FvOPxKFBZHurE8cWDV8VTt5mlGrSxrDZRwNQ5+t8KlVaUOngCYDCy3t2s9iuo0aS
+    qMZzZsl6TOEUHN/su1F15F35WYPIZXvdngD1FAlSn6Q3H2FRef6VgQ1yUZy+A/4e
+    y1Y3MKw+fEUbBg+OL0eio7IlkftQVWdhpdXUP91ij48eCL10scD6fXxqDH2xegtr
+    yz22O7dckbrJOJUWGQPmy3hK40YN5NFlnCY0fIfSI0Z3qxWcZsH0gds6nJzn5dWw
+    nKx1V0gQnpIwKtF0S5Gy6ScVRefljhP8CVl6oLG6KLTTwSrHNW7vmBbF5Jr7w0o7
+    gJmubwWrv+j7kZzCNqFRt85gBrbfIj6PwNyyEoj0ySjyxZLXtbIGVwoLf8xaIKq6
+    pBJ8tJjO9F6niqBAVGXQ/SvXMQyUc3jZ11iuY1Rzy5aJ20olvFqGPkWVZwW0swtr
+    sV/8cqVSNEmi9tzoHwjOw58fj7r08iVQxopciiHYB6f7ZACf/A+UAhG+VTcCr122
+    MQYlCvhG19+tGF33KCQ56B6fbOSppM/z3pSa4OpUHYtGlU7IHVxDcDihLozYdyBQ
+    hA==
     -----END CERTIFICATE-----
-  organization-name: built-in
-  application-name: app-built-in
+  organization-name: GameVibe
+  application-name: GameVibe
   redirect-url: http://localhost:8080/api/signin
 gamevibe:
-  databasePath: http://8.138.154.250:8080/imgs/
-  serverPath: /www/wwwroot/images/
+  path: /www/wwwroot/images
+
