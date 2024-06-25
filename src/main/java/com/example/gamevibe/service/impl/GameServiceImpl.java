@@ -8,10 +8,7 @@ import com.example.gamevibe.model.dto.GameEsDTO;
 import com.example.gamevibe.model.dto.GameQueryRequest;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.Game;
-import com.example.gamevibe.model.dto.GameDetailsDTO;
-import com.example.gamevibe.model.vo.GameRankVO;
-import com.example.gamevibe.model.vo.PageResult;
-import com.example.gamevibe.model.vo.PageVO;
+import com.example.gamevibe.model.vo.*;
 import com.example.gamevibe.service.GameService;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -19,6 +16,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -41,7 +39,7 @@ import java.util.stream.Collectors;
 @Service
 public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements GameService {
 
-    @Resource
+    @Autowired
     private GameMapper gameMapper;
 
     @Resource
@@ -56,9 +54,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
     }
 
     @Override
-    public GameDetailsDTO getGameDetailsVO(Long game_id) {
+    public GameDetailsVO getGameDetailsVO(Long game_id) {
         String user_id = BaseContext.getCurrentId();
-        return gameMapper.getGameDetailsDTO(game_id, user_id);
+        return gameMapper.getGameDetailsVO(game_id, user_id);
     }
 
     @Override
@@ -106,5 +104,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
         return pageResult;
     }
 
+    @Override
+    public List<String> listGameName(Integer count) {
+        return gameMapper.listGameName(count);
+    }
 
 }

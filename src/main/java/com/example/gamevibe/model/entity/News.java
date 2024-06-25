@@ -34,7 +34,7 @@ public class News implements Serializable {
     /**
      * 游戏类别
      */
-    private Long type;
+    private String type;
 
     /**
      * 图片，多个图片以,隔开

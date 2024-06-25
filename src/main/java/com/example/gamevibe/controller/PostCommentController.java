@@ -6,6 +6,7 @@ import com.example.gamevibe.model.dto.PostCommentAddRequest;
 import com.example.gamevibe.model.dto.PostCommentQueryRequest;
 import com.example.gamevibe.model.entity.PostComment;
 import com.example.gamevibe.model.vo.PageResult;
+import com.example.gamevibe.model.vo.PostCommentVO;
 import com.example.gamevibe.service.PostCommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +33,7 @@ public class PostCommentController {
      */
     @ApiOperation(value = "获取帖子评论")
     @PostMapping("/list")
-    public BaseResponse<PageResult<PostComment>> listCommentsVOByPage(@RequestBody @Validated PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {
+    public BaseResponse<PageResult<PostCommentVO>> listCommentsVOByPage(@RequestBody @Validated PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {
         return ResultUtils.success(postCommentService.listCommentsByPage(postCommentQueryRequest, request));
     }
 

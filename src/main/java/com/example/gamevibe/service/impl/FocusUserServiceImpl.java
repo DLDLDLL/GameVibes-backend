@@ -62,7 +62,7 @@ public class FocusUserServiceImpl extends ServiceImpl<FocusUserMapper, FocusUser
         }
     }
 
-    private boolean isFocus(String focus_id) {
+    public boolean isFocus(String focus_id) {
         String user_id = BaseContext.getCurrentId();
         return focusUserMapper.isFocus(user_id, focus_id) == 1;
     }

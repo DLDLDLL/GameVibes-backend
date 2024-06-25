@@ -7,6 +7,8 @@ import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.dto.PostAddRequest;
 import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.example.gamevibe.model.vo.PageResult;
+import com.example.gamevibe.model.vo.PostTitleVO;
+import com.example.gamevibe.model.vo.PostsVO;
 import com.example.gamevibe.service.PostService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,8 +43,8 @@ public class PostController {
      */
     @ApiOperation(value = "获取首页推荐列表")
     @PostMapping("/list/recommend")
-    public BaseResponse<PageResult<PostVO>> listPostVOByPage(@RequestBody @Validated PageRequest pageRequest,
-                                                     HttpServletRequest request) {
+    public BaseResponse<PageResult<PostsVO>> listPostVOByPage(@RequestBody @Validated PageRequest pageRequest,
+                                                              HttpServletRequest request) {
         return ResultUtils.success(postService.getPostPage(pageRequest));
     }
 
@@ -55,7 +57,7 @@ public class PostController {
      */
     @ApiOperation(value = "获取首页热门列表")
     @PostMapping("/list/hot")
-    public BaseResponse<PageResult<PostVO>> listPostVOHotByPage(@RequestBody @Validated PageRequest pageRequest,
+    public BaseResponse<PageResult<PostsVO>> listPostVOHotByPage(@RequestBody @Validated PageRequest pageRequest,
                                                    HttpServletRequest request) {
         return ResultUtils.success(postService.getPostPage(pageRequest));
     }
@@ -81,9 +83,9 @@ public class PostController {
      */
     @ApiOperation(value = "搜索帖子")
     @PostMapping("/search")
-    public BaseResponse<PageResult<PostVO>> searchPostVOByPage(@RequestBody @Validated PostQueryRequest postQueryRequest,
+    public BaseResponse<PageResult<PostsVO>> searchPostVOByPage(@RequestBody @Validated PostQueryRequest postQueryRequest,
                                                        HttpServletRequest request) {
-        PageResult<PostVO> pageResult=new PageResult<>();
+        PageResult<PostsVO> pageResult=new PageResult<>();
         try{
             pageResult = postService.searchFromEs(postQueryRequest);
         }catch (IOException e){
@@ -95,11 +97,31 @@ public class PostController {
         return ResultUtils.success(pageResult);
     }
 
+    /**
+     * 发布帖子
+     * @param postAddRequest
+     * @param request
+     * @return
+     */
     @ApiOperation(value = "发布帖子")
     @PostMapping("/add")
     public BaseResponse<Long> addPost(@RequestBody @Validated PostAddRequest postAddRequest,
                                             HttpServletRequest request) {
         return ResultUtils.success(postService.addPost(postAddRequest));
+    }
+
+    /**
+     * 分页获取 热门讨论列表
+     *
+     * @param pageRequest
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "获取热门讨论列表")
+    @PostMapping("/list/title")
+    public BaseResponse<PageResult<PostTitleVO>> listPostTitleVOByPage(@RequestBody @Validated PageRequest pageRequest,
+                                                                       HttpServletRequest request) {
+        return ResultUtils.success(postService.getPostTitlePage(pageRequest));
     }
 
 }

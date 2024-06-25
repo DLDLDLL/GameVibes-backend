@@ -21,4 +21,6 @@ public interface FocusUserService extends IService<FocusUser> {
     void focus(String focus_id);
 
     void unFocus(String focus_id);
+
+    boolean isFocus(String focus_id);
 }

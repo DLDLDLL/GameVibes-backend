@@ -3,7 +3,6 @@ package com.example.gamevibe.aspect;
 import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.mapper.FocusUserMapper;
 import com.example.gamevibe.mapper.UserMapper;
-import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -71,8 +70,9 @@ public class ModifyOutputAspect {
 
     @Around("getGameDetails()")
     public Object modifyGameDetails(ProceedingJoinPoint joinPoint) throws Throwable {
-        GameDetailsDTO gameDetailsDTO = (GameDetailsDTO) joinPoint.proceed();
-        return new GameDetailsVO().DTOToVO(gameDetailsDTO);
+        GameDetailsVO gameDetailsVO = (GameDetailsVO) joinPoint.proceed();
+        gameDetailsVO.processImages();
+        return gameDetailsVO;
     }
 
     @Around("listCollectMessage()")

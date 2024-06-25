@@ -13,4 +13,8 @@
         </foreach>
     </select>
 
+    <select id="listGameName" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT name FROM game ORDER BY RAND() LIMIT #{count};
+    </select>
+
 </mapper>

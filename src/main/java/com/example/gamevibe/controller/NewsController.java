@@ -5,6 +5,8 @@ import com.example.gamevibe.common.BaseResponse;
 import com.example.gamevibe.common.ResultUtils;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.News;
+import com.example.gamevibe.model.vo.NewsVO;
+import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.service.NewsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,8 +35,8 @@ public class NewsController {
      */
     @ApiOperation(value = "获取资讯")
     @PostMapping("/list/page")
-    public BaseResponse<Page<News>> listNewsByPage(@RequestBody @Validated PageRequest pageRequest,
-                                                     HttpServletRequest request) {
+    public BaseResponse<PageResult<NewsVO>> listNewsByPage(@RequestBody @Validated PageRequest pageRequest,
+                                                           HttpServletRequest request) {
         return ResultUtils.success(newsService.getNewsPage(pageRequest));
     }
 }

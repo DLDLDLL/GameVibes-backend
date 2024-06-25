@@ -1,26 +1,39 @@
 package com.example.gamevibe.model.vo;
 
-import cn.hutool.json.JSONUtil;
-import com.example.gamevibe.model.dto.GameDetailsDTO;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
-import java.util.List;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class GameDetailsVO extends GameDetailsDTO implements Serializable {
+public class GameDetailsVO implements Serializable {
 
-    private List<String> imageList;
+    @ApiModelProperty(value = "游戏id", example = "1802728212422225921")
+    private Long id;
 
-    public GameDetailsVO DTOToVO(GameDetailsDTO gameDetailsDTO) {
-        GameDetailsVO gameDetailsVO = new GameDetailsVO();
-        BeanUtils.copyProperties(gameDetailsDTO, gameDetailsVO);
-        gameDetailsVO.setImageList(JSONUtil.toList(gameDetailsDTO.getImages(), String.class));
-        gameDetailsVO.getImageList().remove(0);
-        return gameDetailsVO;
+    @ApiModelProperty(value = "游戏名称", example = "黑神话：悟空")
+    private String name;
+
+    @ApiModelProperty(value = "游戏图片", example = "https://cdn.casbin.org/img/casbin.svg,https://cdn.casbin.org/img/casbin.svg")
+    private String images;
+
+    @ApiModelProperty(value = "游戏简介", example = "...")
+    private String intro;
+
+    @ApiModelProperty(value = "游戏评分", example = "9.9")
+    private Double score;
+
+    @ApiModelProperty(value = "游戏类型", example = "类魂")
+    private String type;
+
+    @ApiModelProperty(value = "是否评分", example = "0", notes = "0为未评分, 1为已评分")
+    private Integer is_mark;
+
+
+    public void processImages() {
+        String images = this.getImages();
+        String url = images.replaceAll("\\[|\\]|\"", "");
+        this.setImages(url);
     }
 
 }

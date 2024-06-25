@@ -18,22 +18,12 @@ import java.util.List;
  * 帖子展示
  */
 @Data
-public class PostVO implements Serializable {
+public class PostsVO implements Serializable {
 
     /**
      * id
      */
     private Long id;
-
-    /**
-     * 用户名
-     */
-    private String user_name;
-
-    /**
-     * 用户头像
-     */
-    private String avatar;
 
     /**
      * 标题
@@ -48,17 +38,7 @@ public class PostVO implements Serializable {
     /**
      * 图片
      */
-    private List<String> images;
-
-    /**
-     * 帖子内容
-     */
-    private String content;
-
-    /**
-     * 帖子发布地点
-     */
-    private String location;
+    private String image;
 
     /**
      * 评论数量
@@ -66,28 +46,9 @@ public class PostVO implements Serializable {
     private Integer comments;
 
     /**
-     * 点赞数量
-     */
-    private Integer likes;
-
-    /**
-     * 收藏数量
-     */
-    private Integer favours;
-
-    /**
      * 阅读量
      */
     private Long pv;
-
-    /**
-     * 是否点赞
-     */
-    private Integer is_like;
-
-    private Integer is_favor;
-
-    private Integer is_focus;
 
     /**
      * 帖子发布时间
@@ -103,13 +64,20 @@ public class PostVO implements Serializable {
      * @param post
      * @return
      */
-    public static PostVO objToVo(Post post) {
+
+    public static PostsVO objToVo(Post post) {
         if (post == null) {
             return null;
         }
-        PostVO postVO = new PostVO();
-        BeanUtils.copyProperties(post, postVO);
-        postVO.setImages(JSONUtil.toList(post.getImages(),String.class));
-        return postVO;
+        PostsVO postsVO = new PostsVO();
+        BeanUtils.copyProperties(post, postsVO);
+        List<String> list = JSONUtil.toList(post.getImages(), String.class);
+        if (list != null && !list.isEmpty()) {
+            postsVO.setImage(list.get(0));
+        } else {
+            postsVO.setImage("");
+        }
+        return postsVO;
     }
 }
+
