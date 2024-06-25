@@ -8,7 +8,7 @@ import com.example.gamevibe.model.dto.GameEsDTO;
 import com.example.gamevibe.model.dto.GameQueryRequest;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.Game;
-import com.example.gamevibe.model.vo.GameDetailsVO;
+import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.vo.GameRankVO;
 import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.model.vo.PageVO;
@@ -19,7 +19,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -42,7 +41,7 @@ import java.util.stream.Collectors;
 @Service
 public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements GameService {
 
-    @Autowired
+    @Resource
     private GameMapper gameMapper;
 
     @Resource
@@ -57,9 +56,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
     }
 
     @Override
-    public GameDetailsVO getGameDetailsVO(Long game_id) {
+    public GameDetailsDTO getGameDetailsVO(Long game_id) {
         String user_id = BaseContext.getCurrentId();
-        return gameMapper.getGameDetailsVO(game_id, user_id);
+        return gameMapper.getGameDetailsDTO(game_id, user_id);
     }
 
     @Override
