@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.News;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.gamevibe.model.vo.NewsVO;
+import com.example.gamevibe.model.vo.PageResult;
+
+import javax.naming.ldap.PagedResultsControl;
 
 /**
 * @author D
@@ -11,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2024-06-12 13:46:35
 */
 public interface NewsService extends IService<News> {
-    Page<News> getNewsPage(PageRequest pageRequest);
+    PageResult<NewsVO> getNewsPage(PageRequest pageRequest);
 }

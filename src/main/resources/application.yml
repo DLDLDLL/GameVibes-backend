@@ -47,7 +47,6 @@ casdoor:
   client-secret: af38675442a78ab96bdef566eb1757173ab23b69
   certificate: |-
     -----BEGIN CERTIFICATE-----
-    MIIE3TCCAsWgAwIBAgIDAeJAMA0GCSqGSIb3DQEBCwUAMCgxDjAMBgNVBAoTBWFk
     bWluMRYwFAYDVQQDEw1jZXJ0LWJ1aWx0LWluMB4XDTI0MDUyNDEyMTA1MloXDTQ0
     MDUyNDEyMTA1MlowKDEOMAwGA1UEChMFYWRtaW4xFjAUBgNVBAMTDWNlcnQtYnVp
     bHQtaW4wggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDbbjKI13xjUP/+
@@ -81,4 +80,3 @@ casdoor:
 gamevibe:
   databasePath: http://8.138.154.250:8080/imgs/
   serverPath: /www/wwwroot/images/
-

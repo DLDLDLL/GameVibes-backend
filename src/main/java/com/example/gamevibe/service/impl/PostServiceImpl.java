@@ -5,13 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.context.BaseContext;
+import com.example.gamevibe.mapper.UserMapper;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.dto.PostAddRequest;
 import com.example.gamevibe.model.dto.PostEsDTO;
 import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.example.gamevibe.model.entity.Post;
-import com.example.gamevibe.model.vo.PageResult;
-import com.example.gamevibe.model.vo.PostVO;
+import com.example.gamevibe.model.vo.*;
+import com.example.gamevibe.service.PostCollectService;
+import com.example.gamevibe.service.PostLikeService;
 import com.example.gamevibe.service.PostService;
 import com.example.gamevibe.mapper.PostMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,7 @@ import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -48,21 +51,29 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         implements PostService {
     @Resource
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
+    @Resource
+    private UserMapper userMapper;
+    @Resource
+    private PostLikeService postLikeService;
+    @Resource
+    private PostCollectService postCollectService;
+    @Resource
+    private FocusUserServiceImpl focusUserService;
 
-    public PageResult<PostVO> getPostPage(PageRequest pageRequest) {
+    public PageResult<PostsVO> getPostPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         // 查询条件
-        QueryWrapper<com.example.gamevibe.model.entity.Post> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<Post> queryWrapper = new QueryWrapper<>();
         String sortOrder = pageRequest.getSortOrder();
         String sortField = pageRequest.getSortField();
         queryWrapper.eq("is_delete", 0);
         queryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals("ascend"), sortField);
 
         Page<Post> page = page(new Page<>(current, size), queryWrapper);
-        PageResult<PostVO> pageResult = new PageResult<>();
+        PageResult<PostsVO> pageResult = new PageResult<>();
         pageResult.setTotal(page.getTotal());
-        pageResult.setRecords(page.getRecords().stream().map(PostVO::objToVo).collect(Collectors.toList()));
+        pageResult.setRecords(page.getRecords().stream().map(PostsVO::objToVo).collect(Collectors.toList()));
         // 查询
         return pageResult;
     }
@@ -74,13 +85,25 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         if (post == null) {
             return null;
         }
+        PostVO postVO = PostVO.objToVo(post);
+        // 用户
+        String focused_id = post.getUser_id();
+        UserVO userInfo = userMapper.getUserInfo(focused_id);
+        postVO.setUser_name(userInfo.getNick_name());
+        postVO.setAvatar(userInfo.getAvatar());
+        // 是否点赞收藏关注
+        Long postId = post.getId();
+        postVO.setIs_like(postLikeService.isLike(postId) ? 1 : 0);
+        postVO.setIs_favor(postCollectService.isCollect(postId) ? 1 : 0);
+        postVO.setIs_focus(focusUserService.isFocus(focused_id) ? 1 : 0);
+
         post.setPv(post.getPv() + 1);
         updateById(post);
-        return PostVO.objToVo(post);
+        return postVO;
     }
 
     @Override
-    public PageResult<PostVO> searchFromEs(PostQueryRequest postQueryRequest) throws IOException {
+    public PageResult<PostsVO> searchFromEs(PostQueryRequest postQueryRequest) throws IOException {
         String searchText = postQueryRequest.getSearchText();
         // es 起始页为 0
         long current = postQueryRequest.getCurrent() - 1;
@@ -108,7 +131,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(boolQueryBuilder)
                 .withPageable(pageRequest).withSorts(sortBuilder).build();
         SearchHits<PostEsDTO> searchHits = elasticsearchRestTemplate.search(searchQuery, PostEsDTO.class);
-        PageResult<PostVO> page = new PageResult<>();
+        PageResult<PostsVO> page = new PageResult<>();
         page.setTotal(searchHits.getTotalHits());
         List<Post> postList = new ArrayList<>();
         // 结果
@@ -118,7 +141,7 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
                     .collect(Collectors.toList());
             postList = listByIds(postIdList);
         }
-        page.setRecords(postList.stream().map(PostVO::objToVo).collect(Collectors.toList()));
+        page.setRecords(postList.stream().map(PostsVO::objToVo).collect(Collectors.toList()));
         return page;
     }
 
@@ -134,6 +157,26 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
             log.error("保存帖子失败!");
         }
         return post.getId();
+    }
+
+    @Override
+    public PageResult<PostTitleVO> getPostTitlePage(PageRequest pageRequest) {
+        long current = pageRequest.getCurrent();
+        long size = pageRequest.getPageSize();
+        // 查询条件
+        QueryWrapper<Post> queryWrapper = new QueryWrapper<>();
+        String sortOrder = pageRequest.getSortOrder();
+        String sortField = pageRequest.getSortField();
+        queryWrapper.eq("is_delete", 0);
+        queryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals("ascend"), sortField);
+
+        Page<Post> page = page(new Page<>(current, size), queryWrapper);
+        PageResult<PostTitleVO> pageResult = new PageResult<>();
+        pageResult.setTotal(page.getTotal());
+        pageResult.setRecords(page.getRecords().stream().map(PostTitleVO::objToVo).collect(Collectors.toList()));
+        // 查询
+        return pageResult;
+
     }
 
 }

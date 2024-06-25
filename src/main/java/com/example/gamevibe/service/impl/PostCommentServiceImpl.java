@@ -4,16 +4,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.context.BaseContext;
+import com.example.gamevibe.mapper.UserMapper;
 import com.example.gamevibe.model.dto.PostCommentAddRequest;
 import com.example.gamevibe.model.dto.PostCommentQueryRequest;
 import com.example.gamevibe.model.entity.CommentMessage;
 import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.model.entity.PostComment;
-import com.example.gamevibe.model.vo.PageResult;
+import com.example.gamevibe.model.vo.*;
 import com.example.gamevibe.service.CommentMessageService;
 import com.example.gamevibe.service.PostCommentService;
 import com.example.gamevibe.mapper.PostCommentMapper;
 import com.example.gamevibe.service.PostService;
+import com.example.gamevibe.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author D
@@ -35,9 +39,11 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
     CommentMessageService commentMessageService;
     @Resource
     PostService postService;
+    @Resource
+    UserMapper userMapper;
 
     @Override
-    public PageResult<PostComment> listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {
+    public PageResult<PostCommentVO> listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request) {
         long postId = postCommentQueryRequest.getPost_id();
         int current = postCommentQueryRequest.getCurrent();
         int pageSize = postCommentQueryRequest.getPageSize();
@@ -51,9 +57,23 @@ public class PostCommentServiceImpl extends ServiceImpl<PostCommentMapper, PostC
 
         // 执行分页并封装
         Page<PostComment> page = page(new Page<>(current, pageSize), queryWrapper);
-        PageResult<PostComment> pageResult = new PageResult<>();
+        PageResult<PostCommentVO> pageResult = new PageResult<>();
         pageResult.setTotal(page.getTotal());
-        pageResult.setRecords(page.getRecords());
+
+        List<PostCommentVO> postCommentVOList = new ArrayList<>();
+        List<PostComment> postCommentList = page.getRecords();
+        for (PostComment postComment : postCommentList) {
+            PostCommentVO postCommentVO = new PostCommentVO();
+
+            UserVO userInfo = userMapper.getUserInfo(postComment.getUser_id());
+            postCommentVO.setUsername(userInfo.getNick_name());
+            postCommentVO.setAvatar(userInfo.getAvatar());
+            postCommentVO.setContent(postComment.getContent());
+            postCommentVO.setPost_time(postComment.getCreate_time());
+
+            postCommentVOList.add(postCommentVO);
+        }
+        pageResult.setRecords(postCommentVOList);
         return pageResult;
     }
 
