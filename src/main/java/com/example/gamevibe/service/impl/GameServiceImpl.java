@@ -10,7 +10,6 @@ import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.Game;
 import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.vo.GameRankVO;
-import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.GameService;
 import org.apache.commons.lang3.StringUtils;
@@ -62,7 +61,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
     }
 
     @Override
-    public PageResult searchFromEs(GameQueryRequest gameQueryRequest) throws IOException {
+    public PageVO<GameRankVO> searchFromEs(GameQueryRequest gameQueryRequest) throws IOException {
         String searchText = gameQueryRequest.getSearchText();
         // es 起始页为 0
         long current = gameQueryRequest.getCurrent() - 1;
@@ -92,8 +91,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(boolQueryBuilder)
                 .withPageable(pageRequest).withSorts(sortBuilder).build();
         SearchHits<GameEsDTO> searchHits = elasticsearchRestTemplate.search(searchQuery, GameEsDTO.class);
-        PageResult pageResult = new PageResult();
-        pageResult.setTotal(searchHits.getTotalHits());
+        PageVO<GameRankVO> pageVO = new PageVO<>();
+        pageVO.setTotal(searchHits.getTotalHits());
         List<GameRankVO> gameList = new ArrayList<>();
         // 结果
         if (searchHits.hasSearchHits()) {
@@ -102,8 +101,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
                     .collect(Collectors.toList());
             gameList = gameMapper.pageByIds(gameIdList);
         }
-        pageResult.setRecords(gameList);
-        return pageResult;
+        pageVO.setRecords(gameList);
+        return pageVO;
     }
 
 

@@ -6,7 +6,6 @@ import com.example.gamevibe.model.entity.Game;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.vo.GameRankVO;
-import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.model.vo.PageVO;
 
 import java.io.IOException;
@@ -22,5 +21,5 @@ public interface GameService extends IService<Game> {
 
     GameDetailsDTO getGameDetailsVO(Long game_id);
 
-    PageResult searchFromEs(GameQueryRequest gameQueryRequest) throws IOException;
+    PageVO<GameRankVO> searchFromEs(GameQueryRequest gameQueryRequest) throws IOException;
 }

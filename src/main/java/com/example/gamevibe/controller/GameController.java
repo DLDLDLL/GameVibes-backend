@@ -7,7 +7,6 @@ import com.example.gamevibe.model.dto.GameQueryRequest;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.vo.GameRankVO;
-import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.GameService;
 import io.swagger.annotations.*;
@@ -47,18 +46,18 @@ public class GameController {
     @ApiOperation(value = "搜素游戏")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/search")
-    public BaseResponse<PageResult> searchGameVOByPage(@RequestBody @Validated GameQueryRequest gameQueryRequest, HttpServletRequest request) {
-        PageResult pageResult = new PageResult();
+    public BaseResponse<PageVO<GameRankVO>> searchGameVOByPage(@RequestBody @Validated GameQueryRequest gameQueryRequest, HttpServletRequest request) {
+        PageVO<GameRankVO> pageVO = new PageVO<>();
         System.out.println(gameQueryRequest);
         try {
-            pageResult = gameService.searchFromEs(gameQueryRequest);
+            pageVO = gameService.searchFromEs(gameQueryRequest);
         } catch (IOException e) {
             if (!(e.getMessage().contains("200 OK"))) {
                 log.error("搜索错误", e);
                 return ResultUtils.error(ErrorCode.SYSTEM_ERROR, "搜索错误");
             }
         }
-        return ResultUtils.success(pageResult);
+        return ResultUtils.success(pageVO);
     }
 
 
