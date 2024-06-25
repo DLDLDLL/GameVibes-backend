@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.mapper.GameMapper;
+import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.dto.GameEsDTO;
 import com.example.gamevibe.model.dto.GameQueryRequest;
 import com.example.gamevibe.model.dto.PageRequest;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
 @Service
 public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements GameService {
 
-    @Autowired
+    @Resource
     private GameMapper gameMapper;
 
     @Resource
@@ -54,9 +55,9 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
     }
 
     @Override
-    public GameDetailsVO getGameDetailsVO(Long game_id) {
+    public GameDetailsDTO getGameDetailsVO(Long game_id) {
         String user_id = BaseContext.getCurrentId();
-        return gameMapper.getGameDetailsVO(game_id, user_id);
+        return gameMapper.getGameDetailsDTO(game_id, user_id);
     }
 
     @Override

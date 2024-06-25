@@ -1,5 +1,6 @@
 package com.example.gamevibe.service;
 
+import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.dto.GameQueryRequest;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.Game;
@@ -18,7 +19,7 @@ public interface GameService extends IService<Game> {
 
     PageVO<GameRankVO> getGameRankVOPage(PageRequest pageRequest);
 
-    GameDetailsVO getGameDetailsVO(Long game_id);
+    GameDetailsDTO getGameDetailsVO(Long game_id);
 
     PageResult searchFromEs(GameQueryRequest gameQueryRequest) throws IOException;
 
