@@ -79,5 +79,6 @@ casdoor:
   application-name: GameVibe
   redirect-url: http://localhost:8080/api/signin
 gamevibe:
-  path: /www/wwwroot/images
+  databasePath: http://8.138.154.250:8080/imgs/
+  serverPath: /www/wwwroot/images/
 
