@@ -46,7 +46,7 @@ public class PostEsDTO implements Serializable {
     /**
      * 创建时间
      */
-    private Date create_time;
+    private Date post_time;
 
     /**
      * 是否删除
