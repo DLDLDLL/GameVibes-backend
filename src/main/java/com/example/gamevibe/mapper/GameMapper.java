@@ -4,7 +4,6 @@ import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.entity.Game;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.gamevibe.model.vo.GameDetailsVO;
 import com.example.gamevibe.model.vo.GameRankVO;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -44,6 +43,7 @@ public interface GameMapper extends BaseMapper<Game> {
     List<Game> listGameWithDelete(Date minUpdateTime);
 
     List<GameRankVO> pageByIds(List<Long> gameIdList);
+
 
     List<String> listGameName(int count);
 }

@@ -1,18 +1,17 @@
 package com.example.gamevibe.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.dto.PostAddRequest;
 import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.entity.Post;
 import com.example.gamevibe.model.vo.PageResult;
-import com.example.gamevibe.model.vo.PostTitleVO;
 import com.example.gamevibe.model.vo.PostVO;
 import com.example.gamevibe.model.vo.PostsVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author D
@@ -30,5 +29,5 @@ public interface PostService extends IService<Post> {
 
     Long addPost(PostAddRequest postAddRequest);
 
-    PageResult<PostTitleVO> getPostTitlePage(PageRequest pageRequest);
+    List<String> getPostTitlePage(PageRequest pageRequest);
 }

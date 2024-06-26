@@ -58,7 +58,8 @@ public class SecurityConfig {
                         "/api/game/details",
                         "/api/game/list/page/vo",
                         "/api/game/search",
-                        "/api/game_mark/list/page/vo"
+                        "/api/game_mark/list/page/vo",
+                        "/api/game/names"
                 ).permitAll()
                 // Our private endpoints
                 .mvcMatchers(

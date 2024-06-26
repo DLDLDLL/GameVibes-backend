@@ -17,7 +17,6 @@ import com.example.gamevibe.service.PostLikeService;
 import com.example.gamevibe.service.PostService;
 import com.example.gamevibe.mapper.PostMapper;
 import lombok.extern.slf4j.Slf4j;
-import nonapi.io.github.classgraph.json.JSONUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -30,7 +29,6 @@ import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -159,8 +157,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         return post.getId();
     }
 
+    // 客户端需要
     @Override
-    public PageResult<PostTitleVO> getPostTitlePage(PageRequest pageRequest) {
+    public List<String> getPostTitlePage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         // 查询条件
@@ -174,10 +173,31 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, com.example.gamevib
         PageResult<PostTitleVO> pageResult = new PageResult<>();
         pageResult.setTotal(page.getTotal());
         pageResult.setRecords(page.getRecords().stream().map(PostTitleVO::objToVo).collect(Collectors.toList()));
-        // 查询
-        return pageResult;
+
+        // 只获取title, 客户端需要
+        return pageResult.getRecords().stream().map(PostTitleVO::getTitle).toList();
 
     }
+
+//    @Override
+//    public PageResult<PostTitleVO> getPostTitlePage(PageRequest pageRequest) {
+//        long current = pageRequest.getCurrent();
+//        long size = pageRequest.getPageSize();
+//        // 查询条件
+//        QueryWrapper<Post> queryWrapper = new QueryWrapper<>();
+//        String sortOrder = pageRequest.getSortOrder();
+//        String sortField = pageRequest.getSortField();
+//        queryWrapper.eq("is_delete", 0);
+//        queryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals("ascend"), sortField);
+//
+//        Page<Post> page = page(new Page<>(current, size), queryWrapper);
+//        PageResult<PostTitleVO> pageResult = new PageResult<>();
+//        pageResult.setTotal(page.getTotal());
+//        pageResult.setRecords(page.getRecords().stream().map(PostTitleVO::objToVo).collect(Collectors.toList()));
+//        // 查询
+//        return pageResult;
+//
+//    }
 
 }
 
