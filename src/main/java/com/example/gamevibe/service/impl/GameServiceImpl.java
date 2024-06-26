@@ -17,7 +17,6 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -61,7 +60,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
     }
 
     @Override
-    public PageResult searchFromEs(GameQueryRequest gameQueryRequest) throws IOException {
+    public PageVO<GameRankVO> searchFromEs(GameQueryRequest gameQueryRequest) throws IOException {
         String searchText = gameQueryRequest.getSearchText();
         // es 起始页为 0
         long current = gameQueryRequest.getCurrent() - 1;
@@ -91,8 +90,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(boolQueryBuilder)
                 .withPageable(pageRequest).withSorts(sortBuilder).build();
         SearchHits<GameEsDTO> searchHits = elasticsearchRestTemplate.search(searchQuery, GameEsDTO.class);
-        PageResult pageResult = new PageResult();
-        pageResult.setTotal(searchHits.getTotalHits());
+        PageVO<GameRankVO> pageVO = new PageVO<>();
+        pageVO.setTotal(searchHits.getTotalHits());
         List<GameRankVO> gameList = new ArrayList<>();
         // 结果
         if (searchHits.hasSearchHits()) {
@@ -101,8 +100,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
                     .collect(Collectors.toList());
             gameList = gameMapper.pageByIds(gameIdList);
         }
-        pageResult.setRecords(gameList);
-        return pageResult;
+        pageVO.setRecords(gameList);
+        return pageVO;
     }
 
     @Override

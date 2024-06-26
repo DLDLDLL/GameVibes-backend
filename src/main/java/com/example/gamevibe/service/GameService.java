@@ -21,7 +21,7 @@ public interface GameService extends IService<Game> {
 
     GameDetailsDTO getGameDetailsVO(Long game_id);
 
-    PageResult searchFromEs(GameQueryRequest gameQueryRequest) throws IOException;
+    PageVO<GameRankVO> searchFromEs(GameQueryRequest gameQueryRequest) throws IOException;
 
     List<String> listGameName(Integer count);
 }
