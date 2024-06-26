@@ -6,7 +6,6 @@ import com.example.gamevibe.common.ResultUtils;
 import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.dto.GameQueryRequest;
 import com.example.gamevibe.model.dto.PageRequest;
-import com.example.gamevibe.model.vo.GameDetailsVO;
 import com.example.gamevibe.model.vo.GameRankVO;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.GameService;
@@ -16,7 +15,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
@@ -48,7 +46,7 @@ public class GameController {
     @ApiOperation(value = "搜素游戏")
     @ApiResponse(code = 0, message = "ok")
     @GetMapping("/search")
-    public BaseResponse<PageVO<GameRankVO>> searchGameVOByPage(@RequestBody @Validated GameQueryRequest gameQueryRequest, HttpServletRequest request) {
+    public BaseResponse<PageVO<GameRankVO>> searchGameVOByPage(@RequestBody GameQueryRequest gameQueryRequest) {
         PageVO<GameRankVO> pageVO = new PageVO<>();
         System.out.println(gameQueryRequest);
         try {
