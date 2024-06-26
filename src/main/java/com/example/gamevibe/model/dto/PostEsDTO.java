@@ -39,6 +39,16 @@ public class PostEsDTO implements Serializable {
     private String content;
 
     /**
+     * 阅读量
+     */
+    private Long pv;
+
+    /**
+     * 创建时间
+     */
+    private Date post_time;
+
+    /**
      * 是否删除
      */
     private Integer is_delete;
