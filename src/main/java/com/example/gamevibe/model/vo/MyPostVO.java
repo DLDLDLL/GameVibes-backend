@@ -1,12 +1,14 @@
 package com.example.gamevibe.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class MyPostVO implements Serializable {
@@ -60,6 +62,7 @@ public class MyPostVO implements Serializable {
     /**
      * 帖子图片
      */
+    @JsonIgnore
     @ApiModelProperty(value = "帖子图片", example = "https://image.baidu.com/...")
     protected String images;
 
@@ -104,4 +107,7 @@ public class MyPostVO implements Serializable {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @ApiModelProperty(value = "是否收藏", notes = "0为未点赞，1为已点赞", example = "0")
     protected Integer is_collect;
+
+    @ApiModelProperty(value = "帖子图片")
+    protected List<String> imageList;
 }

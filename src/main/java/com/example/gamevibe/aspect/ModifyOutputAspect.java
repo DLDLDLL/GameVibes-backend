@@ -1,5 +1,6 @@
 package com.example.gamevibe.aspect;
 
+import cn.hutool.json.JSONUtil;
 import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.mapper.FocusUserMapper;
 import com.example.gamevibe.mapper.UserMapper;
@@ -51,6 +52,18 @@ public class ModifyOutputAspect {
 
     @Pointcut("execution(* com.example.gamevibe.service.FocusUserService.getFansVOPage(..))")
     public void pageFans() {
+    }
+
+    @Pointcut("execution(* com.example.gamevibe.service.PostLikeService.getLikePostVOPage(..))")
+    public void listPostLike() {
+    }
+
+    @Pointcut("execution(* com.example.gamevibe.service.PostCollectService.getCollectPostVOPage(..))")
+    public void listPostCollect() {
+    }
+
+    @Pointcut("execution(* com.example.gamevibe.service.UserService.getMyPostVOPage(..))")
+    public void listPost() {
     }
 
     @Around("getUserInfo()")
@@ -130,6 +143,33 @@ public class ModifyOutputAspect {
         });
         fansVOPage.setRecords(records);
         return fansVOPage;
+    }
+
+    @Around("listPostLike()")
+    public Object postLikeJsonToList(ProceedingJoinPoint joinPoint) throws Throwable {
+        PageVO<MyPostLikeVO> postLikePage = (PageVO<MyPostLikeVO>) joinPoint.proceed();
+        List<MyPostLikeVO> records = postLikePage.getRecords();
+        records.forEach(record -> record.setImageList(JSONUtil.toList(record.getImages(), String.class)));
+        postLikePage.setRecords(records);
+        return postLikePage;
+    }
+
+    @Around("listPostCollect()")
+    public Object postCollectJsonToList(ProceedingJoinPoint joinPoint) throws Throwable {
+        PageVO<MyPostCollectVO> postCollectPage = (PageVO<MyPostCollectVO>) joinPoint.proceed();
+        List<MyPostCollectVO> records = postCollectPage.getRecords();
+        records.forEach(record -> record.setImageList(JSONUtil.toList(record.getImages(), String.class)));
+        postCollectPage.setRecords(records);
+        return postCollectPage;
+    }
+
+    @Around("listPost()")
+    public Object postJsonToList(ProceedingJoinPoint joinPoint) throws Throwable {
+        PageVO<MyPostVO> postPage = (PageVO<MyPostVO>) joinPoint.proceed();
+        List<MyPostVO> records = postPage.getRecords();
+        records.forEach(record -> record.setImageList(JSONUtil.toList(record.getImages(), String.class)));
+        postPage.setRecords(records);
+        return postPage;
     }
 
 
