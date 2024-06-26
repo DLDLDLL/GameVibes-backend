@@ -1,6 +1,7 @@
 package com.example.gamevibe.model.vo;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -14,12 +15,14 @@ public class PageVO<T> implements Serializable {
     /**
      * 当前页
      */
+    @JsonIgnore
     @ApiModelProperty(value = "当前页", example = "1")
     private long current;
 
     /**
      * 页大小
      */
+    @JsonIgnore
     @ApiModelProperty(value = "页大小", example = "10")
     private long size;
 

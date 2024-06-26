@@ -22,9 +22,11 @@ public class GameDetailsDTO implements Serializable {
     @ApiModelProperty(value = "游戏简介", example = "...")
     protected String intro;
 
+    @JsonIgnore
     @ApiModelProperty(value = "游戏评分", example = "9.9")
     protected Double score;
 
+    @JsonIgnore
     @ApiModelProperty(value = "游戏类型", example = "类魂")
     protected String type;
 

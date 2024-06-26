@@ -1,5 +1,7 @@
 package com.example.gamevibe.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
 @Data
 public class GameMarkVO implements Serializable {
 
+    @JsonIgnore
     @ApiModelProperty(value = "用户id", example = "43ef5ba2-5b0a-43bc-a83e-fe3b3340c4ac")
     protected String user_id;
 
@@ -18,6 +21,7 @@ public class GameMarkVO implements Serializable {
     @ApiModelProperty(value = "用户昵称", example = "手机用户")
     protected String user_name;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "发布时间", example = "2024-06-18T11:00:42")
     protected LocalDateTime create_time;
 

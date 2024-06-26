@@ -1,5 +1,6 @@
 package com.example.gamevibe.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,6 +41,7 @@ public class MyPostVO implements Serializable {
     /**
      * 帖子发布时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "帖子发布时间", example = "2024-06-18T11:00:42")
     protected LocalDateTime post_time;
 

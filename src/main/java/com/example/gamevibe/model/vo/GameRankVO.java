@@ -1,5 +1,6 @@
 package com.example.gamevibe.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class GameRankVO implements Serializable {
     @ApiModelProperty(value = "游戏图片", example = "https://cdn.casbin.org/img/casbin.svg")
     private List<String> image;
 
+    @JsonIgnore
     @ApiModelProperty(value = "游戏类型", example = "类魂")
     private String type;
 
