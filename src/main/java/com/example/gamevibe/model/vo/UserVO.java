@@ -1,5 +1,6 @@
 package com.example.gamevibe.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -22,6 +23,7 @@ public class UserVO implements Serializable {
     @ApiModelProperty(value = "用户昵称", example = "手机用户")
     private String nick_name;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty(value = "创建时间", example = "2024-06-18T11:00:42")
     private LocalDateTime create_time;
 

@@ -45,8 +45,8 @@ public class GameController {
 
     @ApiOperation(value = "搜素游戏")
     @ApiResponse(code = 0, message = "ok")
-    @GetMapping("/search")
-    public BaseResponse<PageVO<GameRankVO>> searchGameVOByPage(@RequestBody GameQueryRequest gameQueryRequest) {
+    @PostMapping("/search")
+    public BaseResponse<PageVO<GameRankVO>> searchGameVOByPage(@RequestBody @Validated GameQueryRequest gameQueryRequest) {
         PageVO<GameRankVO> pageVO = new PageVO<>();
         System.out.println(gameQueryRequest);
         try {

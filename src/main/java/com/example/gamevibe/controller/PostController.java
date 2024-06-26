@@ -7,7 +7,6 @@ import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.dto.PostAddRequest;
 import com.example.gamevibe.model.dto.PostQueryRequest;
 import com.example.gamevibe.model.vo.PageResult;
-import com.example.gamevibe.model.vo.PostTitleVO;
 import com.example.gamevibe.model.vo.PostsVO;
 import com.example.gamevibe.service.PostService;
 import io.swagger.annotations.Api;
@@ -25,6 +24,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 
 @Api(tags = "帖子模块")
 @RestController
@@ -119,9 +119,15 @@ public class PostController {
      */
     @ApiOperation(value = "获取热门讨论列表")
     @PostMapping("/list/title")
-    public BaseResponse<PageResult<PostTitleVO>> listPostTitleVOByPage(@RequestBody @Validated PageRequest pageRequest,
-                                                                       HttpServletRequest request) {
+    public BaseResponse<List<String>> listPostTitleVOByPage(@RequestBody @Validated PageRequest pageRequest,
+                                                            HttpServletRequest request) {
         return ResultUtils.success(postService.getPostTitlePage(pageRequest));
     }
 
+//    @ApiOperation(value = "获取热门讨论列表")
+//    @PostMapping("/list/title")
+//    public BaseResponse<PageResult<PostTitleVO>> listPostTitleVOByPage(@RequestBody @Validated PageRequest pageRequest,
+//                                                                       HttpServletRequest request) {
+//        return ResultUtils.success(postService.getPostTitlePage(pageRequest));
+//    }
 }
