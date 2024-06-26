@@ -5,6 +5,7 @@ import com.example.gamevibe.model.dto.PostCommentQueryRequest;
 import com.example.gamevibe.model.entity.PostComment;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.gamevibe.model.vo.PageResult;
+import com.example.gamevibe.model.vo.PostCommentVO;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface PostCommentService extends IService<PostComment> {
 
-    PageResult<PostComment> listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request);
+    PageResult<PostCommentVO> listCommentsByPage(PostCommentQueryRequest postCommentQueryRequest, HttpServletRequest request);
 
     Long comment(PostCommentAddRequest postCommentAddRequest);
 }

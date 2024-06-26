@@ -3,9 +3,10 @@ package com.example.gamevibe.controller;
 import com.example.gamevibe.common.BaseResponse;
 import com.example.gamevibe.common.ErrorCode;
 import com.example.gamevibe.common.ResultUtils;
+import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.dto.GameQueryRequest;
 import com.example.gamevibe.model.dto.PageRequest;
-import com.example.gamevibe.model.dto.GameDetailsDTO;
+import com.example.gamevibe.model.vo.GameDetailsVO;
 import com.example.gamevibe.model.vo.GameRankVO;
 import com.example.gamevibe.model.vo.PageVO;
 import com.example.gamevibe.service.GameService;
@@ -18,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Api(tags = "游戏模块")
@@ -60,5 +62,11 @@ public class GameController {
         return ResultUtils.success(pageVO);
     }
 
-
+    @ApiOperation(value = "获取搜索发现游戏名称")
+    @ApiImplicitParam(name = "count", value = "展示数量", required = true, paramType = "query")
+    @ApiResponse(code = 0, message = "ok")
+    @GetMapping("/names")
+    public BaseResponse<List<String>> listGameName(@RequestParam @NotNull Integer count) {
+        return ResultUtils.success(gameService.listGameName(count));
+    }
 }

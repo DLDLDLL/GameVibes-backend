@@ -6,10 +6,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.News;
 import com.example.gamevibe.model.entity.Post;
+import com.example.gamevibe.model.vo.NewsVO;
+import com.example.gamevibe.model.vo.PageResult;
 import com.example.gamevibe.service.NewsService;
 import com.example.gamevibe.mapper.NewsMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 /**
 * @author D
@@ -21,7 +25,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News>
     implements NewsService{
 
     @Override
-    public Page<News> getNewsPage(PageRequest pageRequest) {
+    public PageResult<NewsVO> getNewsPage(PageRequest pageRequest) {
         long current = pageRequest.getCurrent();
         long size = pageRequest.getPageSize();
         // 查询条件
@@ -31,7 +35,11 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News>
         queryWrapper.eq("is_delete", 0);
         queryWrapper.orderBy(StringUtils.isNotBlank(sortField), sortOrder.equals("ascend"),sortField);
 
-        return page(new Page<>(current, size), queryWrapper);
+        Page<News> page = page(new Page<>(current, size), queryWrapper);
+        PageResult<NewsVO> pageResult = new PageResult<>();
+        pageResult.setTotal(page.getTotal());
+        pageResult.setRecords(page.getRecords().stream().map(NewsVO::objToVo).collect(Collectors.toList()));
+        return pageResult;
     }
 }
 

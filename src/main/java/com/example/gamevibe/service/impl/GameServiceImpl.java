@@ -4,13 +4,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.gamevibe.context.BaseContext;
 import com.example.gamevibe.mapper.GameMapper;
+import com.example.gamevibe.model.dto.GameDetailsDTO;
 import com.example.gamevibe.model.dto.GameEsDTO;
 import com.example.gamevibe.model.dto.GameQueryRequest;
 import com.example.gamevibe.model.dto.PageRequest;
 import com.example.gamevibe.model.entity.Game;
-import com.example.gamevibe.model.dto.GameDetailsDTO;
-import com.example.gamevibe.model.vo.GameRankVO;
-import com.example.gamevibe.model.vo.PageVO;
+import com.example.gamevibe.model.vo.*;
 import com.example.gamevibe.service.GameService;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -18,6 +17,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -61,7 +61,7 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
     }
 
     @Override
-    public PageVO<GameRankVO> searchFromEs(GameQueryRequest gameQueryRequest) throws IOException {
+    public PageResult searchFromEs(GameQueryRequest gameQueryRequest) throws IOException {
         String searchText = gameQueryRequest.getSearchText();
         // es 起始页为 0
         long current = gameQueryRequest.getCurrent() - 1;
@@ -91,8 +91,8 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
         NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(boolQueryBuilder)
                 .withPageable(pageRequest).withSorts(sortBuilder).build();
         SearchHits<GameEsDTO> searchHits = elasticsearchRestTemplate.search(searchQuery, GameEsDTO.class);
-        PageVO<GameRankVO> pageVO = new PageVO<>();
-        pageVO.setTotal(searchHits.getTotalHits());
+        PageResult pageResult = new PageResult();
+        pageResult.setTotal(searchHits.getTotalHits());
         List<GameRankVO> gameList = new ArrayList<>();
         // 结果
         if (searchHits.hasSearchHits()) {
@@ -101,9 +101,13 @@ public class GameServiceImpl extends ServiceImpl<GameMapper, Game> implements Ga
                     .collect(Collectors.toList());
             gameList = gameMapper.pageByIds(gameIdList);
         }
-        pageVO.setRecords(gameList);
-        return pageVO;
+        pageResult.setRecords(gameList);
+        return pageResult;
     }
 
+    @Override
+    public List<String> listGameName(Integer count) {
+        return gameMapper.listGameName(count);
+    }
 
 }
