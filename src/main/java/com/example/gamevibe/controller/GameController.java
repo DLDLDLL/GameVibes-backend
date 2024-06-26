@@ -30,7 +30,7 @@ public class GameController {
 
     @ApiOperation(value = "获取游戏排行榜", notes = "pageRequest默认为(current: 1, pageSize: 10)")
     @ApiResponse(code = 0, message = "ok")
-    @GetMapping("/list/page/vo")
+    @PostMapping("/list/page/vo")
     public BaseResponse<PageVO<GameRankVO>> listGameRankVOByPage(@RequestBody(required = false) @Validated PageRequest pageRequest) {
         return ResultUtils.success(gameService.getGameRankVOPage(pageRequest));
     }
