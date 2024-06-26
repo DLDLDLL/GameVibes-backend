@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
-
 @Data
 public class GameRankVO implements Serializable {
 
@@ -17,7 +15,7 @@ public class GameRankVO implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "游戏图片", example = "https://cdn.casbin.org/img/casbin.svg")
-    private List<String> image;
+    private String image;
 
     @JsonIgnore
     @ApiModelProperty(value = "游戏类型", example = "类魂")
