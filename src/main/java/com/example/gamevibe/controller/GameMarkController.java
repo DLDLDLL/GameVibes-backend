@@ -26,7 +26,7 @@ public class GameMarkController {
 
     @ApiOperation(value = "获取游戏详情页点评", notes = "pageRequest默认为(current: 1, pageSize: 10)")
     @ApiResponse(code = 0, message = "ok")
-    @GetMapping("/list/page/vo")
+    @PostMapping("/list/page/vo")
     public BaseResponse<PageVO<GameMarkVO>> listGameMarkVOByPage(@RequestBody(required = false) @Validated PageRequest pageRequest, @RequestParam @NotNull(message = "游戏id不能为空") Long game_id) {
         return ResultUtils.success(gameMarkService.getGameMarkVOPage(pageRequest, game_id));
     }
